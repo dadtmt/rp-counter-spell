@@ -31,10 +31,6 @@ const SignUp = () => {
   }: typeof form.values) => {
     signUpEmailPassword(email, password, {
       displayName,
-      // metadata: {
-      //   firstName,
-      //   lastName,
-      // },
     });
   };
 

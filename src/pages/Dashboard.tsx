@@ -1,23 +1,13 @@
 import { useOutletContext } from 'react-router-dom';
-import { useUserData } from '@nhost/react';
+import { Container, Title } from '@mantine/core';
+import { LayoutContextType } from '../components/Layout';
 const Dashboard = () => {
-  const user = useOutletContext<typeof useUserData>();
+  const { user } = useOutletContext<LayoutContextType>();
 
   return (
-    <>
-      <div>
-        <h2>Dashboard</h2>
-
-        {user !== null ? (
-          <p>
-            Welcome
-            <span role="img">👋</span>
-          </p>
-        ) : (
-          <p>User is null</p>
-        )}
-      </div>
-    </>
+    <Container>
+      <Title>{user?.displayName} Dashboard</Title>
+    </Container>
   );
 };
 

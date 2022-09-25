@@ -3,6 +3,10 @@ import { Outlet, Link } from 'react-router-dom';
 import { useUserData, useSignOut } from '@nhost/react';
 import { Button, Container } from '@mantine/core';
 
+export type LayoutContextType = {
+  user: ReturnType<typeof useUserData>;
+};
+
 const Layout = () => {
   const { signOut } = useSignOut();
 
