@@ -1,4 +1,5 @@
 import { MantineProvider } from '@mantine/core';
+import { NotificationsProvider } from '@mantine/notifications';
 import { NhostClient, NhostReactProvider } from '@nhost/react';
 import { NhostApolloProvider } from '@nhost/react-apollo';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
@@ -22,28 +23,30 @@ function App() {
       withGlobalStyles
       withNormalizeCSS
     >
-      <NhostReactProvider nhost={nhost}>
-        <NhostApolloProvider nhost={nhost}>
-          <BrowserRouter>
-            {' '}
-            <Routes>
-              <Route path="sign-up" element={<SignUp />} />
-              <Route path="sign-in" element={<SignIn />} />
-              <Route
-                path="/"
-                element={
-                  <ProtectedRoute>
-                    <Layout />
-                  </ProtectedRoute>
-                }
-              >
-                <Route index element={<Dashboard />} />
-                <Route path="profile" element={<Profile />} />
-              </Route>
-            </Routes>
-          </BrowserRouter>
-        </NhostApolloProvider>
-      </NhostReactProvider>
+      <NotificationsProvider>
+        <NhostReactProvider nhost={nhost}>
+          <NhostApolloProvider nhost={nhost}>
+            <BrowserRouter>
+              {' '}
+              <Routes>
+                <Route path="sign-up" element={<SignUp />} />
+                <Route path="sign-in" element={<SignIn />} />
+                <Route
+                  path="/"
+                  element={
+                    <ProtectedRoute>
+                      <Layout />
+                    </ProtectedRoute>
+                  }
+                >
+                  <Route index element={<Dashboard />} />
+                  <Route path="profile" element={<Profile />} />
+                </Route>
+              </Routes>
+            </BrowserRouter>
+          </NhostApolloProvider>
+        </NhostReactProvider>
+      </NotificationsProvider>
     </MantineProvider>
   );
 }

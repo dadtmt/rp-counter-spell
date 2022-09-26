@@ -5,6 +5,7 @@
   "dependencies": {
     "@mantine/core": "^5.4.1",
     "@mantine/form": "^5.4.1",
+    "@mantine/notifications": "^5.4.1",
     "@nhost/react": "^0.12.5",
     "@nhost/react-apollo": "^4.7.5",
     "@testing-library/jest-dom": "^5.16.5",
