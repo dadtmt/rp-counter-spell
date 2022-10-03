@@ -1,31 +1,18 @@
-import React from 'react';
 import { Outlet, Link } from 'react-router-dom';
-import { useUserData, useSignOut, useUserId } from '@nhost/react';
+import { useSignOut, useUserId } from '@nhost/react';
 import { Button, Container, Loader } from '@mantine/core';
-import { gql, useQuery } from '@apollo/client';
+import { useGetUserQuery, Users } from '../utils/__generated__/graphql';
 
 export type LayoutContextType = {
-  user: ReturnType<typeof useUserData>;
+  user: Users;
 };
-
-const GET_USER_QUERY = gql`
-  query GetUser($id: uuid!) {
-    user(id: $id) {
-      id
-      displayName
-    }
-  }
-`;
 
 const Layout = () => {
   const { signOut } = useSignOut();
 
   const userId = useUserId();
 
-  const { loading, data } = useQuery(GET_USER_QUERY, {
-    variables: { id: userId },
-    skip: !userId,
-  });
+  const { data, loading } = useGetUserQuery({ variables: { id: userId } });
 
   const user = data?.user;
 

@@ -1,26 +1,16 @@
 import { useOutletContext } from 'react-router-dom';
-import { gql, useMutation } from '@apollo/client';
-import { LayoutContextType } from '../components/Layout';
 import { useForm } from '@mantine/form';
 import { showNotification } from '@mantine/notifications';
 import { Button, Container, Input, Loader } from '@mantine/core';
-
-const UPDATE_USER_MUTATION = gql`
-  mutation ($id: uuid!, $displayName: String!) {
-    updateUser(pk_columns: { id: $id }, _set: { displayName: $displayName }) {
-      id
-      displayName
-    }
-  }
-`;
+import { useUpdateUserMutation } from '../utils/__generated__/graphql';
+import { LayoutContextType } from '../components/Layout';
 
 const Profile = () => {
   const { user } = useOutletContext<LayoutContextType>();
   const form = useForm({
-    initialValues: { displayName: user?.displayName },
+    initialValues: { displayName: user?.displayName || '' },
   });
-  const [mutateUser, { loading: isLoading }] =
-    useMutation(UPDATE_USER_MUTATION);
+  const [mutateUser, { loading: isLoading }] = useUpdateUserMutation();
 
   const handleSubmit = async ({ displayName }: typeof form.values) => {
     try {
