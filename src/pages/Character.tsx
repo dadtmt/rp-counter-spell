@@ -17,7 +17,7 @@ const Character = () => {
     return <Alert>404 - character not found</Alert>;
   }
   const { name } = character;
-  return loading ? <Loader /> : <div>{name}</div>;
+  return <div>{name}</div>;
 };
 
 export default Character;
