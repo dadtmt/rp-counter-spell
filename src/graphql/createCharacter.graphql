@@ -1,0 +1,6 @@
+mutation createCharacter ($name: String!) {
+  insert_characters_one(object: {name: $name}) {
+    id
+    name
+  }
+}
