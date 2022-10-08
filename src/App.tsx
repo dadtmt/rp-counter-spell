@@ -28,7 +28,6 @@ function App() {
         <NhostReactProvider nhost={nhost}>
           <NhostApolloProvider nhost={nhost}>
             <BrowserRouter>
-              {' '}
               <Routes>
                 <Route path="sign-up" element={<SignUp />} />
                 <Route path="sign-in" element={<SignIn />} />

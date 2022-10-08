@@ -1,5 +1,12 @@
 query getCharacter ($id: Int!) {
   characters_by_pk(id: $id) {
+    id
     name
+    counters {
+      id
+      name
+      initial_value
+      current_value
+    }
   }
 }
