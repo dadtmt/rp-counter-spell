@@ -1,0 +1,5 @@
+query getCharacter ($id: Int!) {
+  characters_by_pk(id: $id) {
+    name
+  }
+}
