@@ -1,0 +1,7 @@
+mutation IncCounter ($id: Int!, $inc: Int!) {
+  update_counters_by_pk(pk_columns:{id: $id}, _inc:{current_value: $inc}){
+    id
+    name
+    current_value
+  }
+}

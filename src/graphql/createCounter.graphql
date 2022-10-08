@@ -1,5 +1,5 @@
 mutation CreateCounter ($name: String!, $initialValue: Int!, $characterId: Int!) {
-  insert_counters_one(object: {name: $name, initial_value: $initialValue, character_id: $characterId}) {
+  insert_counters_one(object: {name: $name, initial_value: $initialValue, current_value: $initialValue ,character_id: $characterId}) {
     id
     name
     initial_value

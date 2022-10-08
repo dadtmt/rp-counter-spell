@@ -1,5 +1,6 @@
 import { Alert, Loader, Title } from '@mantine/core';
 import { useParams } from 'react-router-dom';
+import Counter from '../components/Counter';
 import CreateCounter from '../components/CreateCounter';
 import { useGetCharacterQuery } from '../utils/__generated__/graphql';
 
@@ -22,13 +23,9 @@ const Character = () => {
     <div>
       <Title>{name}</Title>
       <ul>
-        {counters.map(
-          ({ id, name: counterName, initial_value, current_value }) => (
-            <li key={id}>
-              {counterName}: {current_value || initial_value}/{initial_value}
-            </li>
-          )
-        )}
+        {counters.map((counter) => (
+          <Counter key={counter.id} {...counter} />
+        ))}
       </ul>
       <CreateCounter characterId={id} />
     </div>
