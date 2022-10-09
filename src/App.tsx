@@ -7,6 +7,7 @@ import './App.css';
 import Layout from './components/Layout';
 import ProtectedRoute from './components/ProtectedRoute';
 import Character from './pages/Character';
+import Counters from './pages/Counters';
 import Dashboard from './pages/Dashboard';
 import Profile from './pages/Profile';
 import SignIn from './pages/Signin';
@@ -43,6 +44,7 @@ function App() {
                   <Route index element={<Dashboard />} />
                   <Route path="profile" element={<Profile />} />
                   <Route path="character/:characterId" element={<Character />}>
+                    <Route index element={<Counters />} />
                     <Route path="spells" element={<Spells />} />
                   </Route>
                 </Route>

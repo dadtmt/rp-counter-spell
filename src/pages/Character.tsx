@@ -1,8 +1,13 @@
 import { Alert, Loader, Title } from '@mantine/core';
 import { Outlet, useParams } from 'react-router-dom';
-import Counter from '../components/Counter';
-import CreateCounter from '../components/CreateCounter';
-import { useGetCharacterQuery } from '../utils/__generated__/graphql';
+import {
+  Characters,
+  useGetCharacterQuery,
+} from '../utils/__generated__/graphql';
+
+export type CharacterContext = {
+  character: Characters;
+};
 
 const Character = () => {
   const { characterId } = useParams();
@@ -17,18 +22,12 @@ const Character = () => {
   if (!character) {
     return <Alert>404 - character not found</Alert>;
   }
-  const { id, name, counters } = character;
+  const { name } = character;
 
   return (
     <div>
       <Title>{name}</Title>
-      <ul>
-        {counters.map((counter) => (
-          <Counter key={counter.id} {...counter} />
-        ))}
-      </ul>
-      <CreateCounter characterId={id} />
-      <Outlet />
+      <Outlet context={{ character }} />
     </div>
   );
 };
