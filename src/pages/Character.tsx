@@ -1,5 +1,5 @@
 import { Alert, Loader, Title } from '@mantine/core';
-import { useParams } from 'react-router-dom';
+import { Outlet, useParams } from 'react-router-dom';
 import Counter from '../components/Counter';
 import CreateCounter from '../components/CreateCounter';
 import { useGetCharacterQuery } from '../utils/__generated__/graphql';
@@ -28,6 +28,7 @@ const Character = () => {
         ))}
       </ul>
       <CreateCounter characterId={id} />
+      <Outlet />
     </div>
   );
 };

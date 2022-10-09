@@ -32,7 +32,7 @@ const Dashboard = () => {
       <ul>
         {user.characters.map(({ id, name }) => (
           <li key={id}>
-            <Link to={id.toString()}>{name}</Link>{' '}
+            <Link to={`character/${id.toString()}`}>{name}</Link>{' '}
           </li>
         ))}
       </ul>

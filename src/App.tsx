@@ -42,8 +42,9 @@ function App() {
                 >
                   <Route index element={<Dashboard />} />
                   <Route path="profile" element={<Profile />} />
-                  <Route path=":characterId" element={<Character />} />
-                  <Route path="spells" element={<Spells />} />
+                  <Route path="character/:characterId" element={<Character />}>
+                    <Route path="spells" element={<Spells />} />
+                  </Route>
                 </Route>
               </Routes>
             </BrowserRouter>
