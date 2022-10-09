@@ -1,0 +1,7 @@
+query GetSpells($name: String) {
+  spells(name: $name) {
+    index
+    name
+    level
+  }
+}

@@ -25,6 +25,10 @@ const Layout = () => {
       label: 'Profile',
       href: '/profile',
     },
+    {
+      label: 'Spells',
+      href: '/spells',
+    },
   ];
 
   if (loading) return <Loader />;

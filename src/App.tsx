@@ -11,6 +11,7 @@ import Dashboard from './pages/Dashboard';
 import Profile from './pages/Profile';
 import SignIn from './pages/Signin';
 import SignUp from './pages/Signup';
+import Spells from './pages/Spells';
 
 const nhost = new NhostClient({
   subdomain: process.env.REACT_APP_NHOST_SUBDOMAIN,
@@ -42,6 +43,7 @@ function App() {
                   <Route index element={<Dashboard />} />
                   <Route path="profile" element={<Profile />} />
                   <Route path=":characterId" element={<Character />} />
+                  <Route path="spells" element={<Spells />} />
                 </Route>
               </Routes>
             </BrowserRouter>
