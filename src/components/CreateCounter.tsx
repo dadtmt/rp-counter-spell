@@ -26,7 +26,9 @@ const CreateCounter = ({ characterId }: { characterId: number }) => {
     <form onSubmit={form.onSubmit(handleSubmit)}>
       <Input placeholder="New counter name" {...form.getInputProps('name')} />
       <NumberInput {...form.getInputProps('initialValue')} />
-      <Button type="submit">{loading ? <Loader /> : 'Create a counter'}</Button>
+      <Button type="submit" disabled={loading}>
+        {loading ? <Loader /> : 'Create a counter'}
+      </Button>
     </form>
   );
 };

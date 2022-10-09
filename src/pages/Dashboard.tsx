@@ -41,7 +41,7 @@ const Dashboard = () => {
           placeholder="New character name"
           {...form.getInputProps('name')}
         />
-        <Button type="submit">
+        <Button type="submit" disabled={loading}>
           {loading ? <Loader /> : 'Create a character'}
         </Button>
       </form>

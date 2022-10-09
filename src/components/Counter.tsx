@@ -11,7 +11,7 @@ interface CounterProps {
 
 const Counter = ({ id, name, initial_value, current_value }: CounterProps) => {
   const [inc, setInc] = useState(1);
-  const [mutateIncCounter] = useIncCounterMutation();
+  const [mutateIncCounter, { loading }] = useIncCounterMutation();
   const incSubmit = (increment: boolean) => {
     mutateIncCounter({
       variables: {
@@ -23,9 +23,13 @@ const Counter = ({ id, name, initial_value, current_value }: CounterProps) => {
   return (
     <li>
       {name}: {current_value || initial_value}/{initial_value}
-      <Button onClick={() => incSubmit(false)}>-</Button>
+      <Button onClick={() => incSubmit(false)} disabled={loading}>
+        -
+      </Button>
       <NumberInput value={inc} onChange={(val) => setInc(val || 1)} />
-      <Button onClick={() => incSubmit(true)}>+</Button>
+      <Button onClick={() => incSubmit(true)} disabled={loading}>
+        +
+      </Button>
     </li>
   );
 };
