@@ -8,5 +8,8 @@ query getCharacter ($id: Int!) {
       initial_value
       current_value
     }
+    writtenspells {
+      dndindex
+    }
   }
 }

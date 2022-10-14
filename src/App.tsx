@@ -12,6 +12,7 @@ import Dashboard from './pages/Dashboard';
 import Profile from './pages/Profile';
 import SignIn from './pages/Signin';
 import SignUp from './pages/Signup';
+import Spellbook from './pages/Spellbook';
 import Spells from './pages/Spells';
 
 const nhost = new NhostClient({
@@ -46,6 +47,7 @@ function App() {
                   <Route path="character/:characterId" element={<Character />}>
                     <Route index element={<Counters />} />
                     <Route path="spells" element={<Spells />} />
+                    <Route path="spellbook" element={<Spellbook />} />
                   </Route>
                 </Route>
               </Routes>

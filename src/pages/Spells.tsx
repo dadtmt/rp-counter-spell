@@ -1,14 +1,9 @@
-import { ApolloClient, InMemoryCache } from '@apollo/client';
 import CopySpell from '../components/CopySpell';
 import { useGetSpellsQuery } from '../utils/__generated__/dndGraphql';
-
-const client = new ApolloClient({
-  uri: 'https://www.dnd5eapi.co/graphql',
-  cache: new InMemoryCache(),
-});
+import dndclient from '../graphql/dnd/client';
 
 const Spells = () => {
-  const { data } = useGetSpellsQuery({ client });
+  const { data } = useGetSpellsQuery({ client: dndclient });
   const spells = data?.spells;
   return (
     <div>

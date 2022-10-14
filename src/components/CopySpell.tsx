@@ -10,15 +10,20 @@ interface CopySpellProps {
 
 const CopySpell = ({ spell: { index, name } }: CopySpellProps) => {
   const {
-    character: { id: characterId },
+    character: { id: characterId, writtenspells },
   } = useOutletContext<CharacterContext>();
-  const [mutateWriteSpell] = useWriteSpellMutation({
+  const [mutateWriteSpell, { loading }] = useWriteSpellMutation({
     variables: { characterId, index: index || '' },
+    refetchQueries: ['getCharacter'],
   });
   return (
     <li>
       {name}
-      <Button onClick={() => mutateWriteSpell()}>Write Spell</Button>
+      {!writtenspells.find(({ dndindex }) => dndindex === index) && (
+        <Button disabled={loading} onClick={() => mutateWriteSpell()}>
+          Write Spell
+        </Button>
+      )}
     </li>
   );
 };
