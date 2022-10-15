@@ -2,10 +2,12 @@ import { Link, Navigate } from 'react-router-dom';
 import {
   Alert,
   Button,
+  Center,
   Container,
-  Input,
+  Group,
   Loader,
   PasswordInput,
+  TextInput,
 } from '@mantine/core';
 import { useForm } from '@mantine/form';
 import { useSignInEmailPassword } from '@nhost/react';
@@ -35,32 +37,39 @@ const SignIn = () => {
   const disableForm = isLoading || needsEmailVerification;
 
   return (
-    <Container>
-      {needsEmailVerification ? (
-        <Alert>
-          Please check your mailbox and follow the verification link to verify
-          your email.
-        </Alert>
-      ) : (
-        <form onSubmit={form.onSubmit(handleSubmit)}>
-          <Input placeholder="Email" {...form.getInputProps('email')} />
-          <PasswordInput
-            placeholder="Password"
-            {...form.getInputProps('password')}
-          />
+    <Center>
+      <Container size="xs" p="lg">
+        {needsEmailVerification ? (
+          <Alert>
+            Please check your mailbox and follow the verification link to verify
+            your email.
+          </Alert>
+        ) : (
+          <form onSubmit={form.onSubmit(handleSubmit)}>
+            <TextInput
+              label="Email"
+              placeholder="Email"
+              {...form.getInputProps('email')}
+            />
+            <PasswordInput
+              label="Password"
+              placeholder="Password"
+              {...form.getInputProps('password')}
+            />
+            <Group position="center" mt="xl">
+              <Button type="submit" disabled={disableForm}>
+                {isLoading ? <Loader /> : 'Sign In'}
+              </Button>
+            </Group>
+            {isError ? <Alert>{error?.message}</Alert> : null}
+          </form>
+        )}
 
-          <Button type="submit" disabled={disableForm}>
-            {isLoading ? <Loader /> : 'Sign In'}
-          </Button>
-
-          {isError ? <Alert>{error?.message}</Alert> : null}
-        </form>
-      )}
-
-      <p>
-        No account yet? <Link to="/sign-up">Sign up</Link>
-      </p>
-    </Container>
+        <p>
+          No account yet? <Link to="/sign-up">Sign up</Link>
+        </p>
+      </Container>
+    </Center>
   );
 };
 
