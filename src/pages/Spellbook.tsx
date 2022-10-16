@@ -1,12 +1,13 @@
 import { useOutletContext } from 'react-router-dom';
-import { CharacterContext } from './Character';
+import { CharacterContext } from '../components/Character';
 import DisplaySpell from '../components/DisplaySpell';
+import { useTitle } from '../components/Layout';
 
 const Spellbook = () => {
   const {
-    character: { writtenspells },
+    character: { writtenspells, name },
   } = useOutletContext<CharacterContext>();
-
+  useTitle(`${name} Spellbook`);
   return (
     <div>
       Spellbook

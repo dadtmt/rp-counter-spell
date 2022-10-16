@@ -8,13 +8,14 @@ import {
   TextInput,
   Title,
 } from '@mantine/core';
-import { LayoutContextType } from '../components/Layout';
+import { LayoutContextType, useTitle } from '../components/Layout';
 import { useForm } from '@mantine/form';
 import { useCreateCharacterMutation } from '../utils/__generated__/graphql';
 import { showNotification } from '@mantine/notifications';
 
 const Dashboard = () => {
   const { user } = useOutletContext<LayoutContextType>();
+  useTitle(`${user?.displayName} Characters`);
   const form = useForm({
     initialValues: { name: '' },
   });
@@ -34,6 +35,7 @@ const Dashboard = () => {
       showNotification({ message: 'Character creation error' });
     }
   };
+
   return (
     <Container>
       <Title>{user?.displayName} Characters</Title>

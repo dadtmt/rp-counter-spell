@@ -6,7 +6,7 @@ import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import './App.css';
 import Layout from './components/Layout';
 import ProtectedRoute from './components/ProtectedRoute';
-import Character from './pages/Character';
+import Character from './components/Character';
 import Counters from './pages/Counters';
 import Dashboard from './pages/Dashboard';
 import EditCounter from './pages/EditCounter';

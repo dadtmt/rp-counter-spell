@@ -1,6 +1,6 @@
 import { Button } from '@mantine/core';
 import { useOutletContext } from 'react-router-dom';
-import { CharacterContext } from '../pages/Character';
+import { CharacterContext } from './Character';
 import { Spell } from '../utils/__generated__/dndGraphql';
 import { useWriteSpellMutation } from '../utils/__generated__/graphql';
 

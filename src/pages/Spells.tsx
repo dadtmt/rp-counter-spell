@@ -1,8 +1,10 @@
 import CopySpell from '../components/CopySpell';
 import { useGetSpellsQuery } from '../utils/__generated__/dndGraphql';
 import dndclient from '../graphql/dnd/client';
+import { useTitle } from '../components/Layout';
 
 const Spells = () => {
+  useTitle('Browse spells');
   const { data } = useGetSpellsQuery({ client: dndclient });
   const spells = data?.spells;
   return (

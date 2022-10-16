@@ -1,15 +1,17 @@
-import { Alert, Loader, Title } from '@mantine/core';
-import { Outlet, useParams } from 'react-router-dom';
+import { Alert, Loader } from '@mantine/core';
+import { Outlet, useOutletContext, useParams } from 'react-router-dom';
+import { LayoutContextType } from './Layout';
 import {
   Characters,
   useGetCharacterQuery,
 } from '../utils/__generated__/graphql';
 
-export type CharacterContext = {
+export type CharacterContext = LayoutContextType & {
   character: Characters;
 };
 
 const Character = () => {
+  const layoutContext = useOutletContext<LayoutContextType>();
   const { characterId } = useParams();
   const { data, loading } = useGetCharacterQuery({
     variables: { id: parseInt(characterId || '') },
@@ -22,12 +24,9 @@ const Character = () => {
   if (!character) {
     return <Alert>404 - character not found</Alert>;
   }
-  const { name } = character;
-
   return (
     <div>
-      <Title>{name}</Title>
-      <Outlet context={{ character }} />
+      <Outlet context={{ character, ...layoutContext }} />
     </div>
   );
 };
