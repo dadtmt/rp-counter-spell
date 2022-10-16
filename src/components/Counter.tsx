@@ -6,9 +6,9 @@ import {
   NumberInput,
   Progress,
   Text,
-  Title,
 } from '@mantine/core';
 import { useState } from 'react';
+import { Link } from 'react-router-dom';
 import { Abacus, EditCircle, Minus, Plus } from 'tabler-icons-react';
 import { useIncCounterMutation } from '../utils/__generated__/graphql';
 
@@ -40,9 +40,11 @@ const Counter = ({ id, name, initial_value, current_value }: CounterProps) => {
         <ActionIcon onClick={() => reInitialize()} disabled={loading}>
           <Abacus />
         </ActionIcon>
-        <ActionIcon>
-          <EditCircle />
-        </ActionIcon>
+        <Link to={`counter/${id.toString()}`}>
+          <ActionIcon>
+            <EditCircle />
+          </ActionIcon>
+        </Link>
         <Text size="xl" style={{ flexGrow: 1 }}>
           {name}
         </Text>

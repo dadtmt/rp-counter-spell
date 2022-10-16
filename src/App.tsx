@@ -9,6 +9,7 @@ import ProtectedRoute from './components/ProtectedRoute';
 import Character from './pages/Character';
 import Counters from './pages/Counters';
 import Dashboard from './pages/Dashboard';
+import EditCounter from './pages/EditCounter';
 import Profile from './pages/Profile';
 import SignIn from './pages/Signin';
 import SignUp from './pages/Signup';
@@ -46,6 +47,10 @@ function App() {
                   <Route path="profile" element={<Profile />} />
                   <Route path="character/:characterId" element={<Character />}>
                     <Route index element={<Counters />} />
+                    <Route
+                      path="counter/:counterId"
+                      element={<EditCounter />}
+                    />
                     <Route path="spells" element={<Spells />} />
                     <Route path="spellbook" element={<Spellbook />} />
                   </Route>

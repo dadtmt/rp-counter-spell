@@ -1,0 +1,7 @@
+query GetCounter ($id: Int!) {
+  counters_by_pk(id: $id) {
+    id
+    name
+    initial_value
+  }
+}

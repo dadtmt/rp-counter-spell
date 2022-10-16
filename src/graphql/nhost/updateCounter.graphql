@@ -1,0 +1,7 @@
+mutation UpdateCounter ($id: Int!, $name: String, $initialValue: Int) {
+  update_counters_by_pk(pk_columns: { id: $id }, _set: { name: $name, initial_value: $initialValue}) {
+    id
+    name
+    initial_value
+  }
+}
