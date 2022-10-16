@@ -1,3 +1,4 @@
+import { Container } from '@mantine/core';
 import { useOutletContext } from 'react-router-dom';
 import Counter from '../components/Counter';
 import CreateCounter from '../components/CreateCounter';
@@ -8,14 +9,12 @@ const Counters = () => {
     character: { id: characterId, counters },
   } = useOutletContext<CharacterContext>();
   return (
-    <div>
-      <ul>
-        {counters.map((counter) => (
-          <Counter key={counter.id} {...counter} />
-        ))}
-      </ul>
+    <Container>
+      {counters.map((counter) => (
+        <Counter key={counter.id} {...counter} />
+      ))}
       <CreateCounter characterId={characterId} />
-    </div>
+    </Container>
   );
 };
 

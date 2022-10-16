@@ -1,11 +1,4 @@
-import {
-  Button,
-  Group,
-  Input,
-  Loader,
-  NumberInput,
-  TextInput,
-} from '@mantine/core';
+import { Button, Group, Loader, NumberInput, TextInput } from '@mantine/core';
 import { useForm } from '@mantine/form';
 import { showNotification } from '@mantine/notifications';
 import { useCreateCounterMutation } from '../utils/__generated__/graphql';
@@ -31,7 +24,7 @@ const CreateCounter = ({ characterId }: { characterId: number }) => {
   };
   return (
     <form onSubmit={form.onSubmit(handleSubmit)}>
-      <Group position="center">
+      <Group position="center" mt="xl">
         <TextInput
           label="New counter name"
           placeholder="name"
