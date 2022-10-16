@@ -37,7 +37,10 @@ const Counter = ({ id, name, initial_value, current_value }: CounterProps) => {
     <Card shadow="sm" p="lg" radius="md" withBorder mt="xl">
       <Progress value={(current_value / initial_value) * 100} mb="xl" />
       <Group position="apart">
-        <ActionIcon onClick={() => reInitialize()} disabled={loading}>
+        <ActionIcon
+          onClick={() => reInitialize()}
+          disabled={loading || current_value === initial_value}
+        >
           <Abacus />
         </ActionIcon>
         <Link to={`counter/${id.toString()}`}>
