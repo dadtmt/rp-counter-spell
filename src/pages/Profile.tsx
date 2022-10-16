@@ -1,7 +1,7 @@
 import { useOutletContext } from 'react-router-dom';
 import { useForm } from '@mantine/form';
 import { showNotification } from '@mantine/notifications';
-import { Button, Container, Input, Loader } from '@mantine/core';
+import { Button, Container, Group, Loader, TextInput } from '@mantine/core';
 import { useUpdateUserMutation } from '../utils/__generated__/graphql';
 import { LayoutContextType } from '../components/Layout';
 
@@ -29,10 +29,15 @@ const Profile = () => {
   return (
     <Container>
       <form onSubmit={form.onSubmit(handleSubmit)}>
-        <Input placeholder="Pseudo" {...form.getInputProps('displayName')} />
-        <Button type="submit">
-          {isLoading ? <Loader /> : 'Update profile'}
-        </Button>
+        <TextInput
+          label="Update your pseudo"
+          {...form.getInputProps('displayName')}
+        />
+        <Group position="center" mt="xl">
+          <Button type="submit">
+            {isLoading ? <Loader /> : 'Update profile'}
+          </Button>
+        </Group>
       </form>
     </Container>
   );
