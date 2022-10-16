@@ -3,9 +3,10 @@ import { useForm } from '@mantine/form';
 import { showNotification } from '@mantine/notifications';
 import { Button, Container, Group, Loader, TextInput } from '@mantine/core';
 import { useUpdateUserMutation } from '../utils/__generated__/graphql';
-import { LayoutContextType } from '../components/Layout';
+import { LayoutContextType, useTitle } from '../components/Layout';
 
 const Profile = () => {
+  useTitle('Profile');
   const { user } = useOutletContext<LayoutContextType>();
   const form = useForm({
     initialValues: { displayName: user?.displayName || '' },

@@ -13,7 +13,7 @@ const Spellbook = () => {
       Spellbook
       <ul>
         {writtenspells.map(({ dndindex }) => (
-          <DisplaySpell index={dndindex} />
+          <DisplaySpell key={dndindex} index={dndindex} />
         ))}
       </ul>
     </div>

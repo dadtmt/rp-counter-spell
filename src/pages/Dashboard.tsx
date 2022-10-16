@@ -6,7 +6,6 @@ import {
   Loader,
   Stack,
   TextInput,
-  Title,
 } from '@mantine/core';
 import { LayoutContextType, useTitle } from '../components/Layout';
 import { useForm } from '@mantine/form';
@@ -38,7 +37,6 @@ const Dashboard = () => {
 
   return (
     <Container>
-      <Title>{user?.displayName} Characters</Title>
       <Stack m="xl">
         {user.characters.map(({ id, name }) => (
           <Link key={id} to={`character/${id.toString()}`}>

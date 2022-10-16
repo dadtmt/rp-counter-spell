@@ -15,10 +15,16 @@ import {
 import { useGetUserQuery, Users } from '../utils/__generated__/graphql';
 import React, { useEffect, useState } from 'react';
 
+type MenuItem = {
+  label: string;
+  href: string;
+};
+
 export type LayoutContextType = {
   user: Users;
   title: string;
   setTitle: React.Dispatch<React.SetStateAction<string>>;
+  setCharacterMenuItems: React.Dispatch<React.SetStateAction<MenuItem[]>>;
 };
 
 export const useTitle = (title: string) => {
@@ -30,6 +36,7 @@ export const useTitle = (title: string) => {
 
 const Layout = () => {
   const [title, setTitle] = useState('Welcome');
+  const [characterMenuItems, setCharacterMenuItems] = useState<MenuItem[]>([]);
   const [opened, setOpened] = useState(false);
   const { signOut } = useSignOut();
   const location = useLocation();
@@ -63,14 +70,29 @@ const Layout = () => {
           width={{ sm: 200, lg: 300 }}
         >
           {menuItems.map(({ label, href }) => (
-            <NavLink
-              key={href}
-              label={label}
-              component={Link}
-              to={href}
-              active={location.pathname === href}
-              onClick={() => setOpened(false)}
-            />
+            <>
+              <NavLink
+                key={href}
+                label={label}
+                component={Link}
+                to={href}
+                active={location.pathname === href}
+                onClick={() => setOpened(false)}
+              />
+              {label === 'Dashboard' &&
+                characterMenuItems.map(
+                  ({ label: characterLabel, href: characterHref }) => (
+                    <NavLink
+                      key={characterHref}
+                      label={characterLabel}
+                      component={Link}
+                      to={characterHref}
+                      active={location.pathname === characterHref}
+                      onClick={() => setOpened(false)}
+                    />
+                  )
+                )}
+            </>
           ))}
           <Group position="center" mt="xl">
             <Button onClick={signOut}>SignOut</Button>
@@ -93,7 +115,14 @@ const Layout = () => {
         </Header>
       }
     >
-      <Outlet context={{ user, title, setTitle }} />
+      <Outlet
+        context={{
+          user,
+          title,
+          setCharacterMenuItems,
+          setTitle,
+        }}
+      />
     </AppShell>
   );
 };
