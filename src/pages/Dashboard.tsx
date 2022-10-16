@@ -1,5 +1,13 @@
 import { Link, useOutletContext } from 'react-router-dom';
-import { Button, Container, Input, Loader, Title } from '@mantine/core';
+import {
+  Button,
+  Container,
+  Group,
+  Loader,
+  Stack,
+  TextInput,
+  Title,
+} from '@mantine/core';
 import { LayoutContextType } from '../components/Layout';
 import { useForm } from '@mantine/form';
 import { useCreateCharacterMutation } from '../utils/__generated__/graphql';
@@ -28,22 +36,27 @@ const Dashboard = () => {
   };
   return (
     <Container>
-      <Title>{user?.displayName} Dashboard</Title>
-      <ul>
+      <Title>{user?.displayName} Characters</Title>
+      <Stack m="xl">
         {user.characters.map(({ id, name }) => (
-          <li key={id}>
-            <Link to={`character/${id.toString()}`}>{name}</Link>{' '}
-          </li>
+          <Link key={id} to={`character/${id.toString()}`}>
+            <Group position="center">
+              <Button>{name}</Button>
+            </Group>
+          </Link>
         ))}
-      </ul>
+      </Stack>
       <form onSubmit={form.onSubmit(handleSubmit)}>
-        <Input
+        <TextInput
+          label="Type character name"
           placeholder="New character name"
           {...form.getInputProps('name')}
         />
-        <Button type="submit" disabled={loading}>
-          {loading ? <Loader /> : 'Create a character'}
-        </Button>
+        <Group position="center" mt="xl">
+          <Button type="submit" disabled={loading}>
+            {loading ? <Loader /> : 'Create a character'}
+          </Button>
+        </Group>
       </form>
     </Container>
   );
