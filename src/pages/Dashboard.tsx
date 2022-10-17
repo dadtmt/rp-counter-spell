@@ -1,10 +1,12 @@
 import { Link, useOutletContext } from 'react-router-dom';
 import {
+  Badge,
   Button,
+  Card,
   Container,
   Group,
   Loader,
-  Stack,
+  Text,
   TextInput,
 } from '@mantine/core';
 import { LayoutContextType, useTitle } from '../components/Layout';
@@ -37,15 +39,23 @@ const Dashboard = () => {
 
   return (
     <Container>
-      <Stack m="xl">
-        {user.characters.map(({ id, name }) => (
-          <Link key={id} to={`character/${id.toString()}`}>
-            <Group position="center">
-              <Button>{name}</Button>
-            </Group>
-          </Link>
-        ))}
-      </Stack>
+      {user.characters.map(({ id, name, counters }) => (
+        <Card key={id} shadow="sm" p="lg" radius="md" withBorder mt="xl">
+          <Group position="apart">
+            <Text size="xl" style={{ flexGrow: 1 }}>
+              {name}
+            </Text>{' '}
+            <Link to={`character/${id.toString()}`}>
+              <Button>Select</Button>{' '}
+            </Link>
+          </Group>
+          {counters.map(({ id, name, current_value, initial_value }) => (
+            <Badge key={id}>
+              {name} {current_value}/{initial_value}
+            </Badge>
+          ))}
+        </Card>
+      ))}
       <form onSubmit={form.onSubmit(handleSubmit)}>
         <TextInput
           label="Type character name"
