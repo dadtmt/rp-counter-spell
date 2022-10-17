@@ -49,7 +49,7 @@ const Layout = () => {
 
   const menuItems = [
     {
-      label: 'Dashboard',
+      label: 'Character selection',
       href: '/',
     },
     {
@@ -69,30 +69,26 @@ const Layout = () => {
           hidden={!opened}
           width={{ sm: 200, lg: 300 }}
         >
+          {characterMenuItems.map(({ label, href }) => (
+            <NavLink
+              key={href}
+              label={label}
+              component={Link}
+              to={href}
+              active={location.pathname === href}
+              onClick={() => setOpened(false)}
+            />
+          ))}
           {menuItems.map(({ label, href }) => (
-            <>
-              <NavLink
-                key={href}
-                label={label}
-                component={Link}
-                to={href}
-                active={location.pathname === href}
-                onClick={() => setOpened(false)}
-              />
-              {label === 'Dashboard' &&
-                characterMenuItems.map(
-                  ({ label: characterLabel, href: characterHref }) => (
-                    <NavLink
-                      key={characterHref}
-                      label={characterLabel}
-                      component={Link}
-                      to={characterHref}
-                      active={location.pathname === characterHref}
-                      onClick={() => setOpened(false)}
-                    />
-                  )
-                )}
-            </>
+            <NavLink
+              key={href}
+              label={label}
+              component={Link}
+              to={href}
+              active={location.pathname === href}
+              onClick={() => setOpened(false)}
+              defaultOpened
+            ></NavLink>
           ))}
           <Group position="center" mt="xl">
             <Button onClick={signOut}>SignOut</Button>
