@@ -5,6 +5,12 @@ query GetUser($id: uuid!) {
       characters {
         id
         name
+        counters {
+          id
+          name
+          initial_value
+          current_value
+        }
       }
     }
   }

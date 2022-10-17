@@ -1,4 +1,4 @@
-import { Button } from '@mantine/core';
+import { Button, Card, Group, Text } from '@mantine/core';
 import { useOutletContext } from 'react-router-dom';
 import { CharacterContext } from './Character';
 import { Spell } from '../utils/__generated__/dndGraphql';
@@ -16,15 +16,25 @@ const CopySpell = ({ spell: { index, name } }: CopySpellProps) => {
     variables: { characterId, index: index || '' },
     refetchQueries: ['getCharacter'],
   });
+  const alreadyWritten = writtenspells.find(
+    ({ dndindex }) => dndindex === index
+  )
+    ? true
+    : false;
   return (
-    <li>
-      {name}
-      {!writtenspells.find(({ dndindex }) => dndindex === index) && (
-        <Button disabled={loading} onClick={() => mutateWriteSpell()}>
+    <Card key={index} shadow="sm" p="lg" radius="md" withBorder mt="xl">
+      <Group position="apart">
+        <Text size="xl" style={{ flexGrow: 1 }}>
+          {name}
+        </Text>
+        <Button
+          disabled={loading || alreadyWritten}
+          onClick={() => mutateWriteSpell()}
+        >
           Write Spell
         </Button>
-      )}
-    </li>
+      </Group>
+    </Card>
   );
 };
 

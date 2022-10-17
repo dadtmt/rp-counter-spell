@@ -10,7 +10,6 @@ const Spellbook = () => {
   useTitle(`${name} Spellbook`);
   return (
     <div>
-      Spellbook
       <ul>
         {writtenspells.map(({ dndindex }) => (
           <DisplaySpell key={dndindex} index={dndindex} />
