@@ -10,6 +10,7 @@ query getCharacter ($id: Int!) {
     }
     writtenspells {
       dndindex
+      spell_data
     }
   }
 }

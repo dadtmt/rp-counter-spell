@@ -1,5 +1,5 @@
-mutation WriteSpell($characterId: Int!, $index: String!) {
-  insert_writtenspells(objects:[{character_id: $characterId, dndindex: $index}]){
+mutation WriteSpell($characterId: Int!, $index: String!, $spellData: String!) {
+  insert_writtenspells(objects:[{character_id: $characterId, dndindex: $index, spell_data: $spellData}]){
    affected_rows
   }
 }
