@@ -2,6 +2,27 @@ query SpellByIndex ($index: String!) {
   spell(index: $index) {
     name
     level
+    attack_type
+    school {
+      name
+    }
+    area_of_effect {
+      size
+      type
+    }
+      level
+      damage {
+      damage_type {
+        name
+      }
+      damage_at_character_level {
+        level
+        damage
+      }
+    }
+    casting_time
+    components
+    duration
     desc
   }
 }

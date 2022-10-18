@@ -23,11 +23,12 @@ const CopySpell = ({ spell: { index, name } }: CopySpellProps) => {
     : false;
   return (
     <Card key={index} shadow="sm" p="lg" radius="md" withBorder mt="xl">
-      <Group position="apart">
-        <Text size="xl" style={{ flexGrow: 1 }}>
+      <Group position="apart" align="end">
+        <Text size="md" style={{ flexGrow: 1 }}>
           {name}
         </Text>
         <Button
+          size="sm"
           disabled={loading || alreadyWritten}
           onClick={() => mutateWriteSpell()}
         >

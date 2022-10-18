@@ -1,3 +1,4 @@
+import { Container } from '@mantine/core';
 import { useOutletContext } from 'react-router-dom';
 import { CharacterContext } from '../components/Character';
 import DisplaySpell from '../components/DisplaySpell';
@@ -9,13 +10,11 @@ const Spellbook = () => {
   } = useOutletContext<CharacterContext>();
   useTitle(`${name} Spellbook`);
   return (
-    <div>
-      <ul>
-        {writtenspells.map(({ dndindex }) => (
-          <DisplaySpell key={dndindex} index={dndindex} />
-        ))}
-      </ul>
-    </div>
+    <Container>
+      {writtenspells.map(({ dndindex }) => (
+        <DisplaySpell key={dndindex} index={dndindex} />
+      ))}
+    </Container>
   );
 };
 
