@@ -26,7 +26,7 @@ const Spellbook = () => {
   return (
     <Container>
       {spells.map((spell) => {
-        return <DisplaySpell key={spell.spellState.dndindex} spell={spell} />;
+        return <DisplaySpell key={spell.spellState.id} spell={spell} />;
       })}
     </Container>
   );

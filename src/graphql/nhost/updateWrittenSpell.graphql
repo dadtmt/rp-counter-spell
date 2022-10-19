@@ -1,0 +1,7 @@
+mutation UpdateWrittenSpell($id: Int!, $castable: Boolean!) {
+  update_writtenspells_by_pk(pk_columns:{id: $id}, _set:{castable: $castable}){
+    id
+    castable
+    spell_data
+  }
+}

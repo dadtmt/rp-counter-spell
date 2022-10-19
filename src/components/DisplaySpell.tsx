@@ -1,7 +1,8 @@
 import { ActionIcon, Badge, Card, Group, Text } from '@mantine/core';
 import { useState } from 'react';
-import { Eyeglass, EyeglassOff } from 'tabler-icons-react';
+import { Book, Book2, Eyeglass, EyeglassOff } from 'tabler-icons-react';
 import { SpellStateAndData } from '../pages/Spellbook';
+import { useUpdateWrittenSpellMutation } from '../utils/__generated__/graphql';
 
 interface SpellProps {
   spell: SpellStateAndData;
@@ -9,6 +10,7 @@ interface SpellProps {
 
 const DisplaySpell = ({
   spell: {
+    spellState: { id, castable },
     spellData: {
       name,
       desc,
@@ -29,11 +31,17 @@ const DisplaySpell = ({
   },
 }: SpellProps) => {
   const [seeDesc, setSeeDesc] = useState(false);
+  const [mutateUpdateWrittenSpell] = useUpdateWrittenSpellMutation({
+    variables: { id, castable: !castable },
+  });
   return (
     <Card shadow="sm" p="lg" radius="md" withBorder mt="xl">
       <Group position="apart" mb="md">
         <ActionIcon onClick={() => setSeeDesc(!seeDesc)}>
           {seeDesc ? <EyeglassOff /> : <Eyeglass />}
+        </ActionIcon>
+        <ActionIcon onClick={() => mutateUpdateWrittenSpell()}>
+          {castable ? <Book /> : <Book2 />}
         </ActionIcon>
         <Text size="xl" style={{ flexGrow: 1 }}>
           {name}

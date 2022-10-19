@@ -9,6 +9,8 @@ query getCharacter ($id: Int!) {
       current_value
     }
     writtenspells {
+      id
+      castable
       dndindex
       spell_data
     }
