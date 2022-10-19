@@ -25,6 +25,8 @@ export type LayoutContextType = {
   title: string;
   setTitle: React.Dispatch<React.SetStateAction<string>>;
   setCharacterMenuItems: React.Dispatch<React.SetStateAction<MenuItem[]>>;
+  filterOpened: boolean;
+  setFilterOpened: React.Dispatch<React.SetStateAction<boolean>>;
 };
 
 export const useTitle = (title: string) => {
@@ -38,6 +40,7 @@ const Layout = () => {
   const [title, setTitle] = useState('Welcome');
   const [characterMenuItems, setCharacterMenuItems] = useState<MenuItem[]>([]);
   const [opened, setOpened] = useState(false);
+  const [filterOpened, setFilterOpened] = useState(false);
   const { signOut } = useSignOut();
   const location = useLocation();
 
@@ -99,6 +102,9 @@ const Layout = () => {
         <Header height={70} p="md">
           <Group position="apart">
             <Title size="sm">{title}</Title>
+            {location.pathname.includes('spellbook') && (
+              <Button onClick={() => setFilterOpened(true)}>Filter</Button>
+            )}
             <MediaQuery largerThan="sm" styles={{ display: 'none' }}>
               <Burger
                 opened={opened}
@@ -117,6 +123,8 @@ const Layout = () => {
           title,
           setCharacterMenuItems,
           setTitle,
+          filterOpened,
+          setFilterOpened,
         }}
       />
     </AppShell>
