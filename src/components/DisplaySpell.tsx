@@ -1,7 +1,7 @@
 import { ActionIcon, Badge, Card, Group, Text } from '@mantine/core';
 import { useState } from 'react';
 import { Book, Book2, Eyeglass, EyeglassOff } from 'tabler-icons-react';
-import { SpellStateAndData } from '../pages/Spellbook';
+import { SpellStateAndData } from '../reducer/filterReducer';
 import { useUpdateWrittenSpellMutation } from '../utils/__generated__/graphql';
 
 interface SpellProps {
@@ -63,11 +63,11 @@ const DisplaySpell = ({
       )}
       {damage && (
         <Badge m={5}>
-          Damage: {damage.damage_type?.name || ''}
+          Damage: {damage.damage_type?.name || ''}{' '}
           {damage.damage_at_character_level
             ?.map(
               ({ damage, level: characterLevel }) =>
-                `lvl${characterLevel}: ${damage}`
+                `lvl ${characterLevel}: ${damage}`
             )
             .join(' / ')}
         </Badge>

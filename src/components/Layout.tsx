@@ -2,6 +2,7 @@ import { Outlet, Link, useLocation, useOutletContext } from 'react-router-dom';
 import { useSignOut, useUserId } from '@nhost/react';
 import {
   AppShell,
+  Badge,
   Burger,
   Button,
   Group,
@@ -13,7 +14,12 @@ import {
   Title,
 } from '@mantine/core';
 import { useGetUserQuery, Users } from '../utils/__generated__/graphql';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useReducer, useState } from 'react';
+import filterReducer, {
+  FilterAction,
+  FilterState,
+} from '../reducer/filterReducer';
+import { Book, Book2 } from 'tabler-icons-react';
 
 type MenuItem = {
   label: string;
@@ -27,6 +33,8 @@ export type LayoutContextType = {
   setCharacterMenuItems: React.Dispatch<React.SetStateAction<MenuItem[]>>;
   filterOpened: boolean;
   setFilterOpened: React.Dispatch<React.SetStateAction<boolean>>;
+  filterState: FilterState;
+  filterDispatch: React.Dispatch<FilterAction>;
 };
 
 export const useTitle = (title: string) => {
@@ -37,18 +45,25 @@ export const useTitle = (title: string) => {
 };
 
 const Layout = () => {
-  const [title, setTitle] = useState('Welcome');
+  const [title, setTitle] = useState('');
   const [characterMenuItems, setCharacterMenuItems] = useState<MenuItem[]>([]);
   const [opened, setOpened] = useState(false);
   const [filterOpened, setFilterOpened] = useState(false);
   const { signOut } = useSignOut();
   const location = useLocation();
-
   const userId = useUserId();
+  const [filterState, filterDispatch] = useReducer(filterReducer, {
+    castableSelected: true,
+    nonCastableSelected: true,
+    allLevelsSelected: true,
+    spellLevels: [],
+    spells: [],
+    filteredSpells: [],
+  });
 
   const { data, loading } = useGetUserQuery({ variables: { id: userId } });
-
   const user = data?.user;
+  const { castableSelected, nonCastableSelected, spellLevels } = filterState;
 
   const menuItems = [
     {
@@ -103,7 +118,18 @@ const Layout = () => {
           <Group position="apart">
             <Title size="sm">{title}</Title>
             {location.pathname.includes('spellbook') && (
-              <Button onClick={() => setFilterOpened(true)}>Filter</Button>
+              <Group position="right">
+                {castableSelected && <Book />}
+                {nonCastableSelected && <Book2 />}
+                <Badge>
+                  lvl.{' '}
+                  {spellLevels
+                    .filter(({ selected }) => selected)
+                    .map(({ level }) => level)
+                    .join('/')}
+                </Badge>
+                <Button onClick={() => setFilterOpened(true)}>Filter</Button>
+              </Group>
             )}
             <MediaQuery largerThan="sm" styles={{ display: 'none' }}>
               <Burger
@@ -125,6 +151,8 @@ const Layout = () => {
           setTitle,
           filterOpened,
           setFilterOpened,
+          filterState,
+          filterDispatch,
         }}
       />
     </AppShell>
