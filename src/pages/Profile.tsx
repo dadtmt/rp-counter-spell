@@ -11,7 +11,7 @@ const Profile = () => {
   const form = useForm({
     initialValues: { displayName: user?.displayName || '' },
   });
-  const [mutateUser, { loading: isLoading }] = useUpdateUserMutation();
+  const [mutateUser, { loading }] = useUpdateUserMutation();
 
   const handleSubmit = async ({ displayName }: typeof form.values) => {
     try {
@@ -35,8 +35,8 @@ const Profile = () => {
           {...form.getInputProps('displayName')}
         />
         <Group position="center" mt="xl">
-          <Button type="submit">
-            {isLoading ? <Loader /> : 'Update profile'}
+          <Button type="submit" disabled={loading}>
+            {loading ? <Loader /> : 'Update profile'}
           </Button>
         </Group>
       </form>
