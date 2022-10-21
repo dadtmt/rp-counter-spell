@@ -26,6 +26,7 @@ const Spells = () => {
         placeholder="spell name"
         value={search}
         onChange={(e) => setSearch(e.currentTarget.value)}
+        mb="lg"
       />
       {loading ? (
         <CenteredLoader />

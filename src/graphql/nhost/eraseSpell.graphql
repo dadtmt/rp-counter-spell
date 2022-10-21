@@ -1,0 +1,5 @@
+mutation EraseSpell($id:Int!) {
+  delete_writtenspells_by_pk(id: $id){
+    id
+  }
+}

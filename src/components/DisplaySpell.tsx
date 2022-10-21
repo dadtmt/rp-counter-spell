@@ -1,8 +1,15 @@
 import { ActionIcon, Badge, Card, Group, Table, Text } from '@mantine/core';
 import { useState } from 'react';
-import { Book, Book2, Eyeglass, EyeglassOff } from 'tabler-icons-react';
+import { useOutletContext } from 'react-router-dom';
+import { Book, Book2, Eraser, Eyeglass, EyeglassOff } from 'tabler-icons-react';
 import { SpellStateAndData } from '../reducer/filterReducer';
-import { useUpdateWrittenSpellMutation } from '../utils/__generated__/graphql';
+import {
+  GetCharacterDocument,
+  GetCharacterQuery,
+  useEraseSpellMutation,
+  useUpdateWrittenSpellMutation,
+} from '../utils/__generated__/graphql';
+import { CharacterContext } from './Character';
 
 interface SpellProps {
   spell: SpellStateAndData;
@@ -31,21 +38,51 @@ const DisplaySpell = ({
   },
 }: SpellProps) => {
   const [seeDesc, setSeeDesc] = useState(false);
+  const {
+    character: { id: characterId },
+  } = useOutletContext<CharacterContext>();
   const [mutateUpdateWrittenSpell] = useUpdateWrittenSpellMutation({
     variables: { id, castable: !castable },
+  });
+  const [mutateEraseSpell] = useEraseSpellMutation({
+    variables: { id },
+    update: (cache) => {
+      const queryOptions = {
+        query: GetCharacterDocument,
+        variables: { id: characterId },
+      };
+      const data = cache.readQuery(queryOptions) as GetCharacterQuery;
+      const characterData = data?.characters_by_pk;
+      const writtenSpells = characterData?.writtenspells || [];
+      cache.writeQuery({
+        ...queryOptions,
+        data: {
+          ...data,
+          characters_by_pk: {
+            ...characterData,
+            writtenspells: writtenSpells.map(({ id: wsid }) => id !== wsid),
+          },
+        },
+      });
+    },
   });
   return (
     <Card shadow="sm" p="lg" radius="md" withBorder mt="xl">
       <Group position="apart" mb="md">
-        <ActionIcon onClick={() => setSeeDesc(!seeDesc)}>
-          {seeDesc ? <EyeglassOff /> : <Eyeglass />}
-        </ActionIcon>
-        <ActionIcon onClick={() => mutateUpdateWrittenSpell()}>
-          {castable ? <Book /> : <Book2 />}
-        </ActionIcon>
+        <Group position="left">
+          <ActionIcon onClick={() => setSeeDesc(!seeDesc)}>
+            {seeDesc ? <EyeglassOff /> : <Eyeglass />}
+          </ActionIcon>
+          <ActionIcon onClick={() => mutateUpdateWrittenSpell()}>
+            {castable ? <Book /> : <Book2 />}
+          </ActionIcon>
+        </Group>
         <Text size="xl" style={{ flexGrow: 1 }}>
           {name}
         </Text>
+        <ActionIcon onClick={() => mutateEraseSpell()}>
+          <Eraser />
+        </ActionIcon>
       </Group>
       <Badge m={5}>level: {level}</Badge>
       {concentration && <Badge m={5}>Concentration</Badge>}
@@ -61,14 +98,18 @@ const DisplaySpell = ({
           Aera: {area_of_effect.size} {area_of_effect.type}
         </Badge>
       )}
-      {damage && (
+      {dc && <Badge m={5}>DC: {dc?.type?.name}</Badge>}
+      {damage && !damage?.damage_at_character_level && (
+        <Badge m={5}>Damage: {damage.damage_type?.name}</Badge>
+      )}
+      {damage?.damage_at_character_level && (
         <Table m={5}>
           <thead>
             <tr>
               <th>Character level</th>
               {damage.damage_at_character_level?.map(
-                ({ damage, level: characterLevel }) => (
-                  <th>lvl {characterLevel}</th>
+                ({ level: characterLevel }) => (
+                  <th key={characterLevel}>lvl {characterLevel}</th>
                 )
               )}
             </tr>
@@ -76,9 +117,11 @@ const DisplaySpell = ({
           <tbody>
             <tr>
               <td>Damage: {damage.damage_type?.name || ''}</td>
-              {damage.damage_at_character_level?.map(({ damage }) => (
-                <td>{damage}</td>
-              ))}
+              {damage.damage_at_character_level?.map(
+                ({ damage, level: characterLevel }) => (
+                  <td key={characterLevel}>{damage}</td>
+                )
+              )}
             </tr>
           </tbody>
         </Table>
@@ -89,21 +132,20 @@ const DisplaySpell = ({
             <tr>
               <th>Slot level</th>
               {heal_at_slot_level?.map(({ level: slotLevel }) => (
-                <th>{slotLevel}</th>
+                <th key={slotLevel}>{slotLevel}</th>
               ))}
             </tr>
           </thead>
           <tbody>
             <tr>
               <td>Heal</td>
-              {heal_at_slot_level?.map(({ healing }) => (
-                <td>{healing}</td>
+              {heal_at_slot_level?.map(({ healing, level: slotLevel }) => (
+                <td key={slotLevel}>{healing}</td>
               ))}
             </tr>
           </tbody>
         </Table>
       )}
-      {dc && <Badge m={5}>DC: {dc?.type?.name}</Badge>}
       {seeDesc &&
         desc.map((text, index) => (
           <Text key={index} color="dimmed">
