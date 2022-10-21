@@ -1,0 +1,15 @@
+{
+  "files": {
+    "main.css": "/dadtmt/rp-counter-spell/static/css/main.782506e2.css",
+    "main.js": "/dadtmt/rp-counter-spell/static/js/main.60c10d84.js",
+    "static/js/787.039bdd7b.chunk.js": "/dadtmt/rp-counter-spell/static/js/787.039bdd7b.chunk.js",
+    "index.html": "/dadtmt/rp-counter-spell/index.html",
+    "main.782506e2.css.map": "/dadtmt/rp-counter-spell/static/css/main.782506e2.css.map",
+    "main.60c10d84.js.map": "/dadtmt/rp-counter-spell/static/js/main.60c10d84.js.map",
+    "787.039bdd7b.chunk.js.map": "/dadtmt/rp-counter-spell/static/js/787.039bdd7b.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.782506e2.css",
+    "static/js/main.60c10d84.js"
+  ]
+}
