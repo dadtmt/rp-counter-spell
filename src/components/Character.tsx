@@ -1,4 +1,4 @@
-import { Alert, Loader } from '@mantine/core';
+import { Alert } from '@mantine/core';
 import { Outlet, useOutletContext, useParams } from 'react-router-dom';
 import { LayoutContextType } from './Layout';
 import {
@@ -6,6 +6,7 @@ import {
   useGetCharacterQuery,
 } from '../utils/__generated__/graphql';
 import { useEffect } from 'react';
+import CenteredLoader from './CenteredLoader';
 
 export type CharacterContext = LayoutContextType & {
   character: Characters;
@@ -30,7 +31,7 @@ const Character = () => {
     }
   }, [character, characterId, setCharacterMenuItems]);
   if (loading) {
-    return <Loader />;
+    return <CenteredLoader />;
   }
 
   if (!character) {

@@ -1,14 +1,14 @@
 import React from 'react';
 import { useAuthenticationStatus } from '@nhost/react';
 import { Navigate, useLocation } from 'react-router-dom';
-import { Loader } from '@mantine/core';
+import CenteredLoader from './CenteredLoader';
 
 const ProtectedRoute = ({ children }: { children: React.ReactNode }) => {
   const { isAuthenticated, isLoading } = useAuthenticationStatus();
   const location = useLocation();
 
   if (isLoading) {
-    return <Loader />;
+    return <CenteredLoader />;
   }
 
   if (!isAuthenticated) {

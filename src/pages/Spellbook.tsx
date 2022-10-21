@@ -8,11 +8,11 @@ import SpellbookFilter from '../components/SpellbookFilter';
 
 const Spellbook = () => {
   const {
-    character: { writtenspells },
+    character: { name, writtenspells },
     filterState,
     filterDispatch,
   } = useOutletContext<CharacterContext>();
-  useTitle('');
+  useTitle(`${name} Spellbook`);
 
   useEffect(() => {
     filterDispatch({ type: 'SET_SPELLS', writtenspells });

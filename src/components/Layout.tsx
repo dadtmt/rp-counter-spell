@@ -5,9 +5,9 @@ import {
   Badge,
   Burger,
   Button,
+  Footer,
   Group,
   Header,
-  Loader,
   MediaQuery,
   Navbar,
   NavLink,
@@ -20,6 +20,7 @@ import filterReducer, {
   FilterState,
 } from '../reducer/filterReducer';
 import { Book, Book2 } from 'tabler-icons-react';
+import CenteredLoader from './CenteredLoader';
 
 type MenuItem = {
   label: string;
@@ -76,7 +77,7 @@ const Layout = () => {
     },
   ];
 
-  if (loading) return <Loader />;
+  if (loading) return <CenteredLoader />;
 
   return (
     <AppShell
@@ -117,20 +118,6 @@ const Layout = () => {
         <Header height={70} p="md">
           <Group position="apart">
             <Title size="sm">{title}</Title>
-            {location.pathname.includes('spellbook') && (
-              <Group position="right">
-                {castableSelected && <Book />}
-                {nonCastableSelected && <Book2 />}
-                <Badge>
-                  lvl.{' '}
-                  {spellLevels
-                    .filter(({ selected }) => selected)
-                    .map(({ level }) => level)
-                    .join('/')}
-                </Badge>
-                <Button onClick={() => setFilterOpened(true)}>Filter</Button>
-              </Group>
-            )}
             <MediaQuery largerThan="sm" styles={{ display: 'none' }}>
               <Burger
                 opened={opened}
@@ -141,6 +128,26 @@ const Layout = () => {
             </MediaQuery>
           </Group>
         </Header>
+      }
+      footer={
+        <Footer
+          height={70}
+          p="md"
+          hidden={!location.pathname.includes('spellbook')}
+        >
+          <Group position="center">
+            {castableSelected && <Book />}
+            {nonCastableSelected && <Book2 />}
+            <Badge>
+              lvl.{' '}
+              {spellLevels
+                .filter(({ selected }) => selected)
+                .map(({ level }) => level)
+                .join('/')}
+            </Badge>
+            <Button onClick={() => setFilterOpened(true)}>Filter</Button>
+          </Group>
+        </Footer>
       }
     >
       <Outlet
