@@ -1,6 +1,5 @@
 import { Button, Card, Group, Text } from '@mantine/core';
 import { useOutletContext } from 'react-router-dom';
-import { gql } from '@apollo/client';
 import { CharacterContext } from './Character';
 import {
   Spell,
