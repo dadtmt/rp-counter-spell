@@ -1,4 +1,4 @@
-import { ActionIcon, Badge, Card, Group, Text } from '@mantine/core';
+import { ActionIcon, Badge, Card, Group, Table, Text } from '@mantine/core';
 import { useState } from 'react';
 import { Book, Book2, Eyeglass, EyeglassOff } from 'tabler-icons-react';
 import { SpellStateAndData } from '../reducer/filterReducer';
@@ -62,26 +62,46 @@ const DisplaySpell = ({
         </Badge>
       )}
       {damage && (
-        <Badge m={5}>
-          Damage: {damage.damage_type?.name || ''}{' '}
-          {damage.damage_at_character_level
-            ?.map(
-              ({ damage, level: characterLevel }) =>
-                `lvl ${characterLevel}: ${damage}`
-            )
-            .join(' / ')}
-        </Badge>
+        <Table m={5}>
+          <thead>
+            <tr>
+              <th>Character level</th>
+              {damage.damage_at_character_level?.map(
+                ({ damage, level: characterLevel }) => (
+                  <th>lvl {characterLevel}</th>
+                )
+              )}
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Damage: {damage.damage_type?.name || ''}</td>
+              {damage.damage_at_character_level?.map(({ damage }) => (
+                <td>{damage}</td>
+              ))}
+            </tr>
+          </tbody>
+        </Table>
       )}
       {heal_at_slot_level && (
-        <Badge m={5}>
-          Heal{' '}
-          {heal_at_slot_level
-            ?.map(
-              ({ healing, level: characterLevel }) =>
-                `lvl${characterLevel}: ${healing}`
-            )
-            .join(' / ')}
-        </Badge>
+        <Table m={5}>
+          <thead>
+            <tr>
+              <th>Slot level</th>
+              {heal_at_slot_level?.map(({ level: slotLevel }) => (
+                <th>{slotLevel}</th>
+              ))}
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Heal</td>
+              {heal_at_slot_level?.map(({ healing }) => (
+                <td>{healing}</td>
+              ))}
+            </tr>
+          </tbody>
+        </Table>
       )}
       {dc && <Badge m={5}>DC: {dc?.type?.name}</Badge>}
       {seeDesc &&
