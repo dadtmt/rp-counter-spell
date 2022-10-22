@@ -2,7 +2,7 @@ import { MantineProvider } from '@mantine/core';
 import { NotificationsProvider } from '@mantine/notifications';
 import { NhostClient, NhostReactProvider } from '@nhost/react';
 import { NhostApolloProvider } from '@nhost/react-apollo';
-import { BrowserRouter, Route, Routes } from 'react-router-dom';
+import { HashRouter, Route, Routes } from 'react-router-dom';
 import './App.css';
 import Layout from './components/Layout';
 import ProtectedRoute from './components/ProtectedRoute';
@@ -31,7 +31,7 @@ function App() {
       <NotificationsProvider>
         <NhostReactProvider nhost={nhost}>
           <NhostApolloProvider nhost={nhost}>
-            <BrowserRouter>
+            <HashRouter>
               <Routes>
                 <Route path="sign-up" element={<SignUp />} />
                 <Route path="sign-in" element={<SignIn />} />
@@ -56,7 +56,7 @@ function App() {
                   </Route>
                 </Route>
               </Routes>
-            </BrowserRouter>
+            </HashRouter>
           </NhostApolloProvider>
         </NhostReactProvider>
       </NotificationsProvider>
