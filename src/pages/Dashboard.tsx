@@ -51,7 +51,7 @@ const Dashboard = () => {
           </Group>
           {counters.map(({ id, name, current_value, initial_value }) => (
             <Badge key={id}>
-              {name} {current_value}/{initial_value}
+              {name}: {current_value} / {initial_value}
             </Badge>
           ))}
         </Card>

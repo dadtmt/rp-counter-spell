@@ -1,0 +1,5 @@
+mutation DeleteCounter($id:Int!) {
+ delete_counters_by_pk(id: $id){
+    id
+  }
+}

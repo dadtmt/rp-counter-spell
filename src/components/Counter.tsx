@@ -8,9 +8,15 @@ import {
   Text,
 } from '@mantine/core';
 import { useState } from 'react';
-import { Link } from 'react-router-dom';
-import { Abacus, EditCircle, Minus, Plus } from 'tabler-icons-react';
-import { useIncCounterMutation } from '../utils/__generated__/graphql';
+import { Link, useOutletContext } from 'react-router-dom';
+import { Abacus, EditCircle, Eraser, Minus, Plus } from 'tabler-icons-react';
+import {
+  GetCharacterDocument,
+  GetCharacterQuery,
+  useDeleteCounterMutation,
+  useIncCounterMutation,
+} from '../utils/__generated__/graphql';
+import { CharacterContext } from './Character';
 
 interface CounterProps {
   id: number;
@@ -20,8 +26,33 @@ interface CounterProps {
 }
 
 const Counter = ({ id, name, initial_value, current_value }: CounterProps) => {
+  const {
+    character: { id: characterId },
+  } = useOutletContext<CharacterContext>();
   const [inc, setInc] = useState(1);
   const [mutateIncCounter, { loading }] = useIncCounterMutation();
+  const [mutateDelCounter] = useDeleteCounterMutation({
+    variables: { id },
+    update: (cache) => {
+      const queryOptions = {
+        query: GetCharacterDocument,
+        variables: { id: characterId },
+      };
+      const data = cache.readQuery(queryOptions) as GetCharacterQuery;
+      const characterData = data?.characters_by_pk;
+      const counters = characterData?.counters || [];
+      cache.writeQuery({
+        ...queryOptions,
+        data: {
+          ...data,
+          characters_by_pk: {
+            ...characterData,
+            counters: counters.map(({ id: cid }) => id !== cid),
+          },
+        },
+      });
+    },
+  });
   const incSubmit = (increment: boolean) => {
     mutateIncCounter({
       variables: {
@@ -52,8 +83,11 @@ const Counter = ({ id, name, initial_value, current_value }: CounterProps) => {
           {name}
         </Text>
         <Badge size="xl">
-          {current_value}/{initial_value}
+          {current_value} / {initial_value}
         </Badge>
+        <ActionIcon onClick={() => mutateDelCounter()}>
+          <Eraser />
+        </ActionIcon>
       </Group>
       <Group mt="xl" position="center">
         <ActionIcon onClick={() => incSubmit(false)} disabled={loading}>
