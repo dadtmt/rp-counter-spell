@@ -47,7 +47,7 @@ const Counter = ({ id, name, initial_value, current_value }: CounterProps) => {
           ...data,
           characters_by_pk: {
             ...characterData,
-            counters: counters.map(({ id: cid }) => id !== cid),
+            counters: counters.filter(({ id: cid }) => id !== cid),
           },
         },
       });

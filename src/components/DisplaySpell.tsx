@@ -60,7 +60,7 @@ const DisplaySpell = ({
           ...data,
           characters_by_pk: {
             ...characterData,
-            writtenspells: writtenSpells.map(({ id: wsid }) => id !== wsid),
+            writtenspells: writtenSpells.filter(({ id: wsid }) => id !== wsid),
           },
         },
       });
