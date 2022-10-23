@@ -77,13 +77,14 @@ const DisplaySpell = ({
             {castable ? <Book /> : <Book2 />}
           </ActionIcon>
         </Group>
-        <Text size="xl" style={{ flexGrow: 1 }}>
-          {name}
-        </Text>
+
         <ActionIcon onClick={() => mutateEraseSpell()}>
           <Eraser />
         </ActionIcon>
       </Group>
+      <Text size="xl" style={{ flexGrow: 1 }} mb="md">
+        {name}
+      </Text>
       <Badge m={5}>level: {level}</Badge>
       {concentration && <Badge m={5}>Concentration</Badge>}
       {ritual && <Badge m={5}>Ritual</Badge>}
