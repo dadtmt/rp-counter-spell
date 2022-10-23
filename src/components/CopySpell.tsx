@@ -1,4 +1,4 @@
-import { ActionIcon, Button, Card, Group, Text } from '@mantine/core';
+import { ActionIcon, Card, Group, Text } from '@mantine/core';
 import { useOutletContext } from 'react-router-dom';
 import { CharacterContext } from './Character';
 import {
