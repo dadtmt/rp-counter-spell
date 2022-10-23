@@ -1,4 +1,4 @@
-import { Button, Card, Group, Text } from '@mantine/core';
+import { ActionIcon, Button, Card, Group, Text } from '@mantine/core';
 import { useOutletContext } from 'react-router-dom';
 import { CharacterContext } from './Character';
 import {
@@ -12,6 +12,7 @@ import {
 } from '../utils/__generated__/graphql';
 import client from '../graphql/dnd/client';
 import { useState } from 'react';
+import { Feather } from 'tabler-icons-react';
 
 interface CopySpellProps {
   spell: Partial<Spell>;
@@ -31,7 +32,7 @@ const CopySpell = ({ spell: { index, name } }: CopySpellProps) => {
         <Text size="md" style={{ flexGrow: 1 }}>
           {name}
         </Text>
-        <Button
+        <ActionIcon
           size="sm"
           disabled={
             loading || writtenspells.find(({ dndindex }) => dndindex === index)
@@ -73,8 +74,8 @@ const CopySpell = ({ spell: { index, name } }: CopySpellProps) => {
             setLocalLoading(false);
           }}
         >
-          Write Spell
-        </Button>
+          <Feather />
+        </ActionIcon>
       </Group>
     </Card>
   );
