@@ -1,0 +1,5 @@
+mutation DeleteCharacter($id:Int!) {
+  delete_characters_by_pk(id: $id){
+    id  
+  }
+}
