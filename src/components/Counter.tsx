@@ -65,9 +65,12 @@ const Counter = ({ id, name, initial_value, current_value }: CounterProps) => {
     mutateIncCounter({ variables: { id, inc: initial_value - current_value } });
   };
   return (
-    <Card shadow="sm" p="lg" radius="md" withBorder mt="xl">
-      <Progress value={(current_value / initial_value) * 100} mb="xl" />
-      <Group position="apart">
+    <Card shadow="xs" p="lg" radius="md" withBorder mt="xl">
+      <Text size="xl" style={{ flexGrow: 1 }}>
+        {name}
+      </Text>
+      <Progress value={(current_value / initial_value) * 100} my="sm" />
+      <Group position="left">
         <ActionIcon
           onClick={() => reInitialize()}
           disabled={loading || current_value === initial_value}
@@ -79,9 +82,7 @@ const Counter = ({ id, name, initial_value, current_value }: CounterProps) => {
             <EditCircle />
           </ActionIcon>
         </Link>
-        <Text size="xl" style={{ flexGrow: 1 }}>
-          {name}
-        </Text>
+
         <Badge size="xl">
           {current_value} / {initial_value}
         </Badge>
@@ -93,11 +94,13 @@ const Counter = ({ id, name, initial_value, current_value }: CounterProps) => {
         <ActionIcon onClick={() => incSubmit(false)} disabled={loading}>
           <Minus />
         </ActionIcon>
-        <NumberInput
-          value={inc}
-          onChange={(val) => setInc(val || 1)}
-          size="xs"
-        />
+        <Group position="center" style={{ width: '60px' }}>
+          <NumberInput
+            value={inc}
+            onChange={(val) => setInc(val || 1)}
+            size="xs"
+          />
+        </Group>
         <ActionIcon onClick={() => incSubmit(true)} disabled={loading}>
           <Plus />
         </ActionIcon>
