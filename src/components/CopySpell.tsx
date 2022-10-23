@@ -15,7 +15,7 @@ import { useState } from 'react';
 import { Feather } from 'tabler-icons-react';
 
 interface CopySpellProps {
-  spell: Partial<Spell>;
+  spell: Pick<Spell, 'index' | 'name'>;
 }
 
 const CopySpell = ({ spell: { index, name } }: CopySpellProps) => {
@@ -23,7 +23,7 @@ const CopySpell = ({ spell: { index, name } }: CopySpellProps) => {
     character: { id: characterId, writtenspells },
   } = useOutletContext<CharacterContext>();
   const [getSpellData, { loading: spellDataLoading }] =
-    useSpellByIndexLazyQuery({ variables: { index: index || '' }, client });
+    useSpellByIndexLazyQuery({ variables: { index }, client });
   const [mutateWriteSpell, { loading }] = useWriteSpellMutation();
   const [localLoading, setLocalLoading] = useState(false);
   return (
@@ -47,7 +47,7 @@ const CopySpell = ({ spell: { index, name } }: CopySpellProps) => {
             await mutateWriteSpell({
               variables: {
                 characterId,
-                index: index || '',
+                index,
                 spellData: spellDataJson,
               },
               update: (cache, { data: writeSpellData }) => {
