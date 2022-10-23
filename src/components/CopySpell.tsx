@@ -35,9 +35,10 @@ const CopySpell = ({ spell: { index, name } }: CopySpellProps) => {
         <ActionIcon
           size="sm"
           disabled={
-            loading || writtenspells.find(({ dndindex }) => dndindex === index)
-              ? true
-              : false || spellDataLoading || localLoading
+            loading ||
+            writtenspells.some(({ dndindex }) => dndindex === index) ||
+            spellDataLoading ||
+            localLoading
           }
           onClick={async () => {
             setLocalLoading(true);

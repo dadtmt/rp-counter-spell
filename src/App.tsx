@@ -2,6 +2,7 @@ import { MantineProvider } from '@mantine/core';
 import { NotificationsProvider } from '@mantine/notifications';
 import { NhostClient, NhostReactProvider } from '@nhost/react';
 import { NhostApolloProvider } from '@nhost/react-apollo';
+import { InMemoryCache } from '@apollo/client';
 import { HashRouter, Route, Routes } from 'react-router-dom';
 import './App.css';
 import Layout from './components/Layout';
@@ -30,7 +31,21 @@ function App() {
     >
       <NotificationsProvider>
         <NhostReactProvider nhost={nhost}>
-          <NhostApolloProvider nhost={nhost}>
+          <NhostApolloProvider
+            nhost={nhost}
+            cache={
+              new InMemoryCache({
+                typePolicies: {
+                  characters: {
+                    fields: {
+                      counters: { merge: false },
+                      writtenspells: { merge: false },
+                    },
+                  },
+                },
+              })
+            }
+          >
             <HashRouter>
               <Routes>
                 <Route path="sign-up" element={<SignUp />} />
