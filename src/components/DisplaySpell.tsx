@@ -34,6 +34,7 @@ const DisplaySpell = ({
       concentration,
       ritual,
       dc,
+      higher_level,
     },
   },
 }: SpellProps) => {
@@ -153,6 +154,16 @@ const DisplaySpell = ({
             {text}
           </Text>
         ))}
+      {seeDesc && higher_level && (
+        <>
+          <Text>At higher levels:</Text>
+          {higher_level.map((text, index) => (
+            <Text key={index} color="dimmed">
+              {text}
+            </Text>
+          ))}
+        </>
+      )}
     </Card>
   );
 };
