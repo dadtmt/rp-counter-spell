@@ -128,6 +128,28 @@ const DisplaySpell = ({
           </tbody>
         </Table>
       )}
+      {damage?.damage_at_slot_level && (
+        <Table m={5}>
+          <thead>
+            <tr>
+              <th>Slot level</th>
+              {damage.damage_at_slot_level?.map(({ level: slotLevel }) => (
+                <th key={slotLevel}>lvl {slotLevel}</th>
+              ))}
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Damage: {damage.damage_type?.name || ''}</td>
+              {damage.damage_at_slot_level?.map(
+                ({ damage, level: slotLevel }) => (
+                  <td key={slotLevel}>{damage}</td>
+                )
+              )}
+            </tr>
+          </tbody>
+        </Table>
+      )}
       {heal_at_slot_level && (
         <Table m={5}>
           <thead>
