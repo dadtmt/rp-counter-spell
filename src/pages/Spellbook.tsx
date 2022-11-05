@@ -4,7 +4,6 @@ import { useOutletContext } from 'react-router-dom';
 import { CharacterContext } from '../components/Character';
 import DisplaySpell from '../components/DisplaySpell';
 import { useTitle } from '../components/Layout';
-import SpellbookFilter from '../components/SpellbookFilter';
 
 const Spellbook = () => {
   const {
@@ -19,14 +18,11 @@ const Spellbook = () => {
   }, [filterDispatch, writtenspells]);
 
   return (
-    <>
-      <SpellbookFilter />
-      <Container>
-        {filterState.filteredSpells.map((spell) => {
-          return <DisplaySpell key={spell.spellState.id} spell={spell} />;
-        })}
-      </Container>
-    </>
+    <Container>
+      {filterState.filteredSpells.map((spell) => {
+        return <DisplaySpell key={spell.spellState.id} spell={spell} />;
+      })}
+    </Container>
   );
 };
 

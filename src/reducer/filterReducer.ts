@@ -88,19 +88,19 @@ const uiReducer = (state: FilterState, action: FilterAction): FilterState => {
     }
     case 'CLICK_CASTABLE': {
       const { castableSelected } = state;
-      return setSpellLevels({
+      return {
         ...state,
         castableSelected: true,
         nonCastableSelected: !castableSelected,
-      });
+      };
     }
     case 'CLICK_NONCASTABLE': {
       const { nonCastableSelected } = state;
-      return setSpellLevels({
+      return {
         ...state,
         castableSelected: !nonCastableSelected,
         nonCastableSelected: true,
-      });
+      };
     }
     case 'SELECT_ALL_LEVELS': {
       const { spellLevels } = state;

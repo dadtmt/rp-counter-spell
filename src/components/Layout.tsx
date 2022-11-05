@@ -2,7 +2,6 @@ import { Outlet, Link, useLocation, useOutletContext } from 'react-router-dom';
 import { useSignOut, useUserId } from '@nhost/react';
 import {
   AppShell,
-  Badge,
   Burger,
   Button,
   Footer,
@@ -19,8 +18,8 @@ import filterReducer, {
   FilterAction,
   FilterState,
 } from '../reducer/filterReducer';
-import { Book, Book2 } from 'tabler-icons-react';
 import CenteredLoader from './CenteredLoader';
+import SpellbookFilter from './SpellbookFilter';
 
 type MenuItem = {
   label: string;
@@ -64,7 +63,7 @@ const Layout = () => {
 
   const { data, loading } = useGetUserQuery({ variables: { id: userId } });
   const user = data?.user;
-  const { castableSelected, nonCastableSelected, spellLevels } = filterState;
+  const { spellLevels } = filterState;
 
   const menuItems = [
     {
@@ -131,22 +130,14 @@ const Layout = () => {
       }
       footer={
         <Footer
-          height={70}
+          height={spellLevels.length > 4 ? 100 : 60}
           p="md"
           hidden={!location.pathname.includes('spellbook')}
         >
-          <Group position="center">
-            {castableSelected && <Book />}
-            {nonCastableSelected && <Book2 />}
-            <Badge>
-              lvl.{' '}
-              {spellLevels
-                .filter(({ selected }) => selected)
-                .map(({ level }) => level)
-                .join('/')}
-            </Badge>
-            <Button onClick={() => setFilterOpened(true)}>Filter</Button>
-          </Group>
+          <SpellbookFilter
+            filterState={filterState}
+            filterDispatch={filterDispatch}
+          />
         </Footer>
       }
     >
