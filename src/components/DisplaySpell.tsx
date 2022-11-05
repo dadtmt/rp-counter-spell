@@ -1,4 +1,12 @@
-import { ActionIcon, Badge, Card, Group, Table, Text } from '@mantine/core';
+import {
+  ActionIcon,
+  Badge,
+  Card,
+  Group,
+  ScrollArea,
+  Table,
+  Text,
+} from '@mantine/core';
 import { useState } from 'react';
 import { useOutletContext } from 'react-router-dom';
 import { Book, Book2, Eraser, Eyeglass, EyeglassOff } from 'tabler-icons-react';
@@ -104,48 +112,52 @@ const DisplaySpell = ({
         <Badge m={5}>Damage: {damage.damage_type?.name}</Badge>
       )}
       {damage?.damage_at_character_level && (
-        <Table m={5}>
-          <thead>
-            <tr>
-              <th>Character level</th>
-              {damage.damage_at_character_level?.map(
-                ({ level: characterLevel }) => (
-                  <th key={characterLevel}>lvl {characterLevel}</th>
-                )
-              )}
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td>Damage: {damage.damage_type?.name || ''}</td>
-              {damage.damage_at_character_level?.map(
-                ({ damage, level: characterLevel }) => (
-                  <td key={characterLevel}>{damage}</td>
-                )
-              )}
-            </tr>
-          </tbody>
-        </Table>
+        <ScrollArea>
+          <Table m={5}>
+            <thead>
+              <tr>
+                <th>Character level</th>
+                {damage.damage_at_character_level?.map(
+                  ({ level: characterLevel }) => (
+                    <th key={characterLevel}>lvl {characterLevel}</th>
+                  )
+                )}
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Damage: {damage.damage_type?.name || ''}</td>
+                {damage.damage_at_character_level?.map(
+                  ({ damage, level: characterLevel }) => (
+                    <td key={characterLevel}>{damage}</td>
+                  )
+                )}
+              </tr>
+            </tbody>
+          </Table>
+        </ScrollArea>
       )}
       {heal_at_slot_level && (
-        <Table m={5}>
-          <thead>
-            <tr>
-              <th>Slot level</th>
-              {heal_at_slot_level?.map(({ level: slotLevel }) => (
-                <th key={slotLevel}>{slotLevel}</th>
-              ))}
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td>Heal</td>
-              {heal_at_slot_level?.map(({ healing, level: slotLevel }) => (
-                <td key={slotLevel}>{healing}</td>
-              ))}
-            </tr>
-          </tbody>
-        </Table>
+        <ScrollArea>
+          <Table m={5}>
+            <thead>
+              <tr>
+                <th>Slot level</th>
+                {heal_at_slot_level?.map(({ level: slotLevel }) => (
+                  <th key={slotLevel}>{slotLevel}</th>
+                ))}
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Heal</td>
+                {heal_at_slot_level?.map(({ healing, level: slotLevel }) => (
+                  <td key={slotLevel}>{healing}</td>
+                ))}
+              </tr>
+            </tbody>
+          </Table>
+        </ScrollArea>
       )}
       {seeDesc &&
         desc.map((text, index) => (

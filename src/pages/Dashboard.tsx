@@ -102,7 +102,7 @@ const Dashboard = () => {
               </ActionIcon>
             </Group>
             {counters.map(({ id, name, current_value, initial_value }) => (
-              <Badge key={id}>
+              <Badge key={id} mr="xs">
                 {name}: {current_value} / {initial_value}
               </Badge>
             ))}
