@@ -31,8 +31,6 @@ export type LayoutContextType = {
   title: string;
   setTitle: React.Dispatch<React.SetStateAction<string>>;
   setCharacterMenuItems: React.Dispatch<React.SetStateAction<MenuItem[]>>;
-  filterOpened: boolean;
-  setFilterOpened: React.Dispatch<React.SetStateAction<boolean>>;
   filterState: FilterState;
   filterDispatch: React.Dispatch<FilterAction>;
 };
@@ -48,7 +46,6 @@ const Layout = () => {
   const [title, setTitle] = useState('');
   const [characterMenuItems, setCharacterMenuItems] = useState<MenuItem[]>([]);
   const [opened, setOpened] = useState(false);
-  const [filterOpened, setFilterOpened] = useState(false);
   const { signOut } = useSignOut();
   const location = useLocation();
   const userId = useUserId();
@@ -147,8 +144,6 @@ const Layout = () => {
           title,
           setCharacterMenuItems,
           setTitle,
-          filterOpened,
-          setFilterOpened,
           filterState,
           filterDispatch,
         }}

@@ -119,7 +119,7 @@ const DisplaySpell = ({
                 <th>Character level</th>
                 {damage.damage_at_character_level?.map(
                   ({ level: characterLevel }) => (
-                    <th key={characterLevel}>lvl {characterLevel}</th>
+                    <th key={characterLevel}>{characterLevel}</th>
                   )
                 )}
               </tr>
@@ -144,7 +144,7 @@ const DisplaySpell = ({
               <tr>
                 <th>Slot level</th>
                 {damage.damage_at_slot_level?.map(({ level: slotLevel }) => (
-                  <th key={slotLevel}>lvl {slotLevel}</th>
+                  <th key={slotLevel}>{slotLevel}</th>
                 ))}
               </tr>
             </thead>

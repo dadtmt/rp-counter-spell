@@ -1,7 +1,15 @@
 import { Spell } from '../utils/__generated__/dndGraphql';
 import { Writtenspells } from '../utils/__generated__/graphql';
 
-export type SpellStateAndData = { spellState: Writtenspells; spellData: Spell };
+type SpellState = Pick<
+  Writtenspells,
+  'castable' | 'id' | 'dndindex' | 'spell_data'
+>;
+
+export type SpellStateAndData = {
+  spellState: SpellState;
+  spellData: Spell;
+};
 
 type LevelSelected = { level: number; selected: boolean };
 
@@ -15,7 +23,7 @@ export type FilterState = {
 };
 
 export type FilterAction =
-  | { type: 'SET_SPELLS'; writtenspells: Writtenspells[] }
+  | { type: 'SET_SPELLS'; writtenspells: SpellState[] }
   | { type: 'CLICK_CASTABLE' }
   | { type: 'CLICK_NONCASTABLE' }
   | { type: 'SELECT_ALL_LEVELS' }
@@ -29,22 +37,18 @@ const setAllLevels = (state: FilterState): FilterState => {
   };
 };
 const setSpellLevels = (state: FilterState): FilterState => {
-  const { castableSelected, nonCastableSelected, spells } = state;
+  const { spells, spellLevels } = state;
+  const levelsFromSpells = Array.from(
+    new Set(spells.map(({ spellData: { level } }) => level))
+  ).sort();
   return setAllLevels({
     ...state,
-    spellLevels: Array.from(
-      new Set(
-        spells
-          .filter(
-            ({ spellState: { castable } }) =>
-              (castable && castableSelected) ||
-              (!castable && nonCastableSelected)
-          )
-          .map(({ spellData: { level } }) => level)
-      )
-    )
-      .sort()
-      .map((level) => ({ level, selected: true })),
+    spellLevels: levelsFromSpells.map((level) => {
+      const matchingSpellLevel = spellLevels.find(
+        ({ level: spellLevel }) => spellLevel === level
+      );
+      return matchingSpellLevel || { level, selected: true };
+    }),
   });
 };
 
@@ -75,16 +79,20 @@ const filterSpells = (state: FilterState): FilterState => {
   };
 };
 
+const setSpells = (state: FilterState, writtenspells: SpellState[]) => {
+  return setSpellLevels({
+    ...state,
+    spells: writtenspells.map((spellState) => {
+      const spellData: Spell = JSON.parse(spellState.spell_data);
+      return { spellState, spellData };
+    }),
+  });
+};
+
 const uiReducer = (state: FilterState, action: FilterAction): FilterState => {
   switch (action.type) {
     case 'SET_SPELLS': {
-      return setSpellLevels({
-        ...state,
-        spells: action.writtenspells.map((spellState) => {
-          const spellData: Spell = JSON.parse(spellState.spell_data);
-          return { spellState, spellData };
-        }),
-      });
+      return setSpells(state, action.writtenspells);
     }
     case 'CLICK_CASTABLE': {
       const { castableSelected } = state;

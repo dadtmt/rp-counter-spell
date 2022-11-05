@@ -14,7 +14,7 @@ export type CharacterContext = LayoutContextType & {
 
 const Character = () => {
   const layoutContext = useOutletContext<LayoutContextType>();
-  const { setCharacterMenuItems } = layoutContext;
+  const { setCharacterMenuItems, filterDispatch } = layoutContext;
   const { characterId } = useParams();
   const { data, loading } = useGetCharacterQuery({
     variables: { id: parseInt(characterId || '') },
@@ -28,8 +28,12 @@ const Character = () => {
         { label: 'Spellbook', href: `${prefix}/spellbook` },
         { label: 'Browse spells', href: `${prefix}/spells` },
       ]);
+      filterDispatch({
+        type: 'SET_SPELLS',
+        writtenspells: character.writtenspells,
+      });
     }
-  }, [character, characterId, setCharacterMenuItems]);
+  }, [character, characterId, filterDispatch, setCharacterMenuItems]);
   if (loading) {
     return <CenteredLoader />;
   }
