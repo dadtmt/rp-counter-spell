@@ -18,6 +18,10 @@ query SpellByIndex ($index: String!) {
         level
         damage
       }
+      damage_at_slot_level {
+        level
+        damage
+      }
     }
     casting_time
     components

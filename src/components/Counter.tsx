@@ -10,14 +10,15 @@ import {
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Abacus, EditCircle, Minus, Plus } from 'tabler-icons-react';
-import { useIncCounterMutation } from '../utils/__generated__/graphql';
+import {
+  Counters,
+  useIncCounterMutation,
+} from '../utils/__generated__/graphql';
 
-interface CounterProps {
-  id: number;
-  name: string;
-  initial_value: number;
-  current_value: number;
-}
+type CounterProps = Pick<
+  Counters,
+  'id' | 'name' | 'initial_value' | 'current_value'
+>;
 
 const Counter = ({ id, name, initial_value, current_value }: CounterProps) => {
   const [inc, setInc] = useState(1);

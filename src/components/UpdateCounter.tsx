@@ -12,7 +12,7 @@ import {
 import { CharacterContext } from './Character';
 
 interface UpdateCounterProps {
-  counter: Partial<Counters>;
+  counter: Pick<Counters, 'id' | 'name' | 'initial_value'>;
 }
 
 const UpdateCounter = ({
@@ -24,7 +24,7 @@ const UpdateCounter = ({
   const navigate = useNavigate();
   const [mutateUpdateCounter, { loading }] = useUpdateCounterMutation();
   const [mutateDelCounter] = useDeleteCounterMutation({
-    variables: { id: id || 0 },
+    variables: { id },
     update: (cache) => {
       const queryOptions = {
         query: GetCharacterDocument,
@@ -52,7 +52,7 @@ const UpdateCounter = ({
     try {
       await mutateUpdateCounter({
         variables: {
-          id: id!,
+          id: id,
           name,
           initialValue,
         },
