@@ -12,9 +12,11 @@ const Counters = () => {
   useTitle(`${name} counters`);
   return (
     <Container>
-      {counters.map((counter) => (
-        <Counter key={counter.id} {...counter} />
-      ))}
+      {[...counters]
+        .sort(({ name: nameA }, { name: nameB }) => nameA.localeCompare(nameB))
+        .map((counter) => (
+          <Counter key={counter.id} {...counter} />
+        ))}
       <CreateCounter characterId={characterId} />
     </Container>
   );
