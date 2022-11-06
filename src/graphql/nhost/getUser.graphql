@@ -11,6 +11,11 @@ query GetUser($id: uuid!) {
           initial_value
           current_value
         }
+        writtenspells {
+          id
+          spell_data
+          castable
+        }
       }
     }
   }

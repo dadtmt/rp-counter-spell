@@ -6,7 +6,9 @@ import {
   Button,
   Card,
   Container,
+  Divider,
   Group,
+  List,
   Loader,
   Modal,
   Space,
@@ -21,8 +23,9 @@ import {
   useDeleteCharacterMutation,
 } from '../utils/__generated__/graphql';
 import { showNotification } from '@mantine/notifications';
-import { Accessible, AlertCircle, Eraser } from 'tabler-icons-react';
+import { Accessible, AlertCircle, Book, Eraser, Eye } from 'tabler-icons-react';
 import { useState } from 'react';
+import { Spell } from '../utils/__generated__/dndGraphql';
 
 type CharacterIdName = Pick<Characters, 'id' | 'name'>;
 
@@ -86,7 +89,7 @@ const Dashboard = () => {
         </Group>
       </Modal>
       <Container>
-        {user.characters.map(({ id, name, counters }) => (
+        {user.characters.map(({ id, name, counters, writtenspells }) => (
           <Card key={id} shadow="sm" p="lg" radius="md" withBorder mt="xl">
             <Group position="apart" mb="md">
               <Text size="xl" style={{ flexGrow: 1 }}>
@@ -101,11 +104,75 @@ const Dashboard = () => {
                 <Eraser />
               </ActionIcon>
             </Group>
-            {counters.map(({ id, name, current_value, initial_value }) => (
-              <Badge key={id} mr="xs">
-                {name}: {current_value} / {initial_value}
-              </Badge>
-            ))}
+            {[...counters]
+              .sort(({ name: nameA }, { name: nameB }) =>
+                nameA.localeCompare(nameB)
+              )
+              .map(({ id, name, current_value, initial_value }) => (
+                <Badge key={id} mr="xs">
+                  {name}: {current_value} / {initial_value}
+                </Badge>
+              ))}
+            <Divider my="sm" />
+            <List listStyleType="none">
+              {Object.entries(
+                writtenspells
+                  .filter(({ castable }) => castable)
+                  .map(({ id: spellId, spell_data }) => {
+                    const spell: Spell = JSON.parse(spell_data);
+                    return { spellId, spell };
+                  })
+                  .sort(
+                    ({ spell: spellA }, { spell: spellB }) =>
+                      spellA.level - spellB.level ||
+                      spellA.name.localeCompare(spellB.name)
+                  )
+                  .reduce(
+                    (
+                      acc: Record<number, { spellId: number; spell: Spell }[]>,
+                      { spellId, spell }
+                    ) => {
+                      const { level } = spell;
+                      return Object.keys(acc).includes(level.toString())
+                        ? {
+                            ...acc,
+                            [level]: [...acc[level], { spellId, spell }],
+                          }
+                        : {
+                            ...acc,
+                            [level]: [{ spellId, spell }],
+                          };
+                    },
+                    {}
+                  )
+              ).map(([level, spells]) => {
+                return (
+                  <List.Item key={level}>
+                    Level {level}
+                    <List listStyleType="none">
+                      {spells.map(({ spellId, spell: { name, level } }) => {
+                        return (
+                          <List.Item key={spellId}>
+                            <Group position="right">
+                              <Text>
+                                {name} lvl {level}
+                              </Text>
+                              <Link
+                                to={`character/${id.toString()}/spellDetail/${spellId.toString()}`}
+                              >
+                                <ActionIcon>
+                                  <Eye />
+                                </ActionIcon>
+                              </Link>
+                            </Group>
+                          </List.Item>
+                        );
+                      })}
+                    </List>
+                  </List.Item>
+                );
+              })}
+            </List>
           </Card>
         ))}
         <Space h="lg" />

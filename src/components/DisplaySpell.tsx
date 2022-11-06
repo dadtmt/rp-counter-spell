@@ -21,6 +21,7 @@ import { CharacterContext } from './Character';
 
 interface SpellProps {
   spell: SpellStateAndData;
+  showDesc?: boolean;
 }
 
 const DisplaySpell = ({
@@ -45,8 +46,9 @@ const DisplaySpell = ({
       higher_level,
     },
   },
+  showDesc = false,
 }: SpellProps) => {
-  const [seeDesc, setSeeDesc] = useState(false);
+  const [seeDesc, setSeeDesc] = useState(showDesc);
   const {
     character: { id: characterId },
   } = useOutletContext<CharacterContext>();

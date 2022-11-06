@@ -16,6 +16,7 @@ import SignIn from './pages/Signin';
 import SignUp from './pages/Signup';
 import Spellbook from './pages/Spellbook';
 import Spells from './pages/Spells';
+import SpellDetail from './pages/SpellDetail';
 
 const nhost = new NhostClient({
   subdomain: process.env.REACT_APP_NHOST_SUBDOMAIN,
@@ -68,6 +69,10 @@ function App() {
                     />
                     <Route path="spells" element={<Spells />} />
                     <Route path="spellbook" element={<Spellbook />} />
+                    <Route
+                      path="spellDetail/:spellId"
+                      element={<SpellDetail />}
+                    />
                   </Route>
                 </Route>
               </Routes>
