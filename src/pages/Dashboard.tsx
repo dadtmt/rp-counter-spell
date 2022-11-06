@@ -148,15 +148,13 @@ const Dashboard = () => {
               ).map(([level, spells]) => {
                 return (
                   <List.Item key={level}>
-                    Level {level}
+                    <Text italic>Level {level}</Text>
                     <List listStyleType="none">
                       {spells.map(({ spellId, spell: { name, level } }) => {
                         return (
                           <List.Item key={spellId}>
-                            <Group position="right">
-                              <Text>
-                                {name} lvl {level}
-                              </Text>
+                            <Group position="apart">
+                              <Text>{name}</Text>
                               <Link
                                 to={`character/${id.toString()}/spellDetail/${spellId.toString()}`}
                               >
