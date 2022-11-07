@@ -23,7 +23,7 @@ import {
   useDeleteCharacterMutation,
 } from '../utils/__generated__/graphql';
 import { showNotification } from '@mantine/notifications';
-import { Accessible, AlertCircle, Book, Eraser, Eye } from 'tabler-icons-react';
+import { Accessible, AlertCircle, Eraser, Eye } from 'tabler-icons-react';
 import { useState } from 'react';
 import { Spell } from '../utils/__generated__/dndGraphql';
 

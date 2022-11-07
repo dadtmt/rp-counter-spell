@@ -12,25 +12,37 @@ import {
 } from '../utils/__generated__/graphql';
 import client from '../graphql/dnd/client';
 import { useState } from 'react';
-import { Feather } from 'tabler-icons-react';
+import { Eyeglass, EyeglassOff, Feather } from 'tabler-icons-react';
+import CenteredLoader from './CenteredLoader';
+import DisplaySpellDetail from './DisplaySpellDetail';
+import { SpellData } from '../reducer/filterReducer';
 
 interface CopySpellProps {
-  spell: Pick<Spell, 'index' | 'name'>;
+  spell: Pick<Spell, 'index' | 'name' | 'level'>;
 }
 
-const CopySpell = ({ spell: { index, name } }: CopySpellProps) => {
+const CopySpell = ({ spell: { index, name, level } }: CopySpellProps) => {
+  const [seeDesc, setSeeDesc] = useState(false);
   const {
     character: { id: characterId, writtenspells },
   } = useOutletContext<CharacterContext>();
-  const [getSpellData, { loading: spellDataLoading }] =
+  const [getSpellData, { loading: spellDataLoading, data }] =
     useSpellByIndexLazyQuery({ variables: { index }, client });
   const [mutateWriteSpell, { loading }] = useWriteSpellMutation();
   const [localLoading, setLocalLoading] = useState(false);
   return (
     <Card key={index} shadow="sm" p="lg" radius="md" withBorder mt="xl">
       <Group position="apart" align="end">
+        <ActionIcon
+          onClick={() => {
+            setSeeDesc(!seeDesc);
+            getSpellData();
+          }}
+        >
+          {seeDesc ? <EyeglassOff /> : <Eyeglass />}
+        </ActionIcon>
         <Text size="md" style={{ flexGrow: 1 }}>
-          {name}
+          (lvl {level}) {name}
         </Text>
         <ActionIcon
           size="sm"
@@ -78,6 +90,10 @@ const CopySpell = ({ spell: { index, name } }: CopySpellProps) => {
           <Feather />
         </ActionIcon>
       </Group>
+      {seeDesc && spellDataLoading && <CenteredLoader />}
+      {seeDesc && data?.spell && (
+        <DisplaySpellDetail showDesc spellData={data.spell as SpellData} />
+      )}
     </Card>
   );
 };

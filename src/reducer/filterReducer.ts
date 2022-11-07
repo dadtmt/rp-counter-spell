@@ -6,9 +6,29 @@ type SpellState = Pick<
   'castable' | 'id' | 'dndindex' | 'spell_data'
 >;
 
+export type SpellData = Pick<
+  Spell,
+  | 'name'
+  | 'desc'
+  | 'level'
+  | 'attack_type'
+  | 'school'
+  | 'area_of_effect'
+  | 'casting_time'
+  | 'components'
+  | 'duration'
+  | 'range'
+  | 'concentration'
+  | 'ritual'
+  | 'dc'
+  | 'higher_level'
+  | 'damage'
+  | 'heal_at_slot_level'
+>;
+
 export type SpellStateAndData = {
   spellState: SpellState;
-  spellData: Spell;
+  spellData: SpellData;
 };
 
 type LevelSelected = { level: number; selected: boolean };
