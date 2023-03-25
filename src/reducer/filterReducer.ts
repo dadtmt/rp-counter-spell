@@ -24,6 +24,7 @@ export type SpellData = Pick<
   | 'higher_level'
   | 'damage'
   | 'heal_at_slot_level'
+  | 'material'
 >;
 
 export type SpellStateAndData = {

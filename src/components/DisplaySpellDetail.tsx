@@ -22,6 +22,7 @@ const DisplaySpellDetail = ({
     ritual,
     dc,
     higher_level,
+    material,
   },
   showDesc = false,
 }: DisplaySpellDetailProps) => {
@@ -116,6 +117,7 @@ const DisplaySpellDetail = ({
           </Table>
         </ScrollArea>
       )}
+      {material && <Text color="dimmed">Material: {material}</Text>}
       {showDesc &&
         desc.map((text, index) => (
           <Text key={index} color="dimmed">
